@@ -2,6 +2,7 @@ ShopMaster
 ==========
 
 CMSC 345 Project
+Team Tuxedo Mask
 
 Project Breakdown:
 
