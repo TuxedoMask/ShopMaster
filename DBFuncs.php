@@ -1,15 +1,18 @@
 <?php
-class dbConn
+class dbFuncs
 {
 	var $conn;
 
-
+	function dbFuncs()
+	{
+		$conn = "";
+	}
 	function connect()
 	{
 		$conn = mysql_connect("studentdb.gl.umbc.edu", "ply1", "ThereisnoP@ssw0rd")
 			or die ("Could not connect to database" . mysql_error());
 			
-		mysql_select_db("ply1", $conn);
+		$rs = mysql_select_db("ply1", $conn) or die ("Could not select database");
 		
 		$this->conn = $conn;
 	}
@@ -50,9 +53,25 @@ class dbConn
 
 	//Not Finished
 	//Items a 2d array containing, productId - UnitPrice - Quantity
-	function addOrder($items, $billInfo, $shipInfo)
+	function addOrder($custid, $items, $billInfo, $shipInfo)
 	{	
+		$sql = "INSERT INTO 'ply1'.'Orders' ('CustomerID', 'OrderDate', 'ShipName', 'ShipEmail', 'ShipPhone',
+			'ShipAddress', 'ShipCity', 'ShipCountry', 'ShipPostalCode') VALUES ('".$custid."', '".$shipInfo[0]."',
+			'".$shipInfo[1]."', '".$shipInfo[2]."', '".$shipInfo[3]."', '".$shipInfo[4]."', '".$shipInfo[5]."',
+			'".$shipInfo[6]."', '".$shipInfo[7]."')";
+		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+
+		$sql = "UPDATE 'ply1'.'Customers' SET 'LastName' = '$billInfo[0]', 'FirstName' = '$billInfo[1]', 'PhoneNo' = '$billInfo[2]',
+			'Address' = '$billInfo[3]', 'City' = '$billInfo[4]', 'Country' = '$billInfo[5]', 'PostalCode' = '$billInfo[5]'
+			WHERE 'CustomerID' = '$custid'";
+		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+	
+		$sql = "SELECT 'OrderID' FROM 'ply1'.'Orders' WHERE 'CustomerID' = '$custid'"
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+
+		while($orderID = mysql_fetch_array($rs)){}
 		
+		//$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]); 
 		for($i = 0; $i <= count($items); $i++)
 		{
 			$sql = "INSERT INTO 'ply1'.'Order Items' ('OrderID', 'ProductID', 'UnitPrice', 'Quantity')
@@ -61,7 +80,22 @@ class dbConn
 		}
 	
 	}
-	
+	//returns a resource, use mysql_fetch_array($rs) to get one row at a time
+	function getAllProducts()
+	{
+		
+		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products'"
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+		return $rs;
+	}
+	//Returns an array
+	function getOneProduct($prodID)
+	{
+		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products' 
+			WHERE 'ProductID' = '$prodID'"
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+		return mysql_fetch_array($rs);
+	}
 	function addProduct($productArr)
 	{
 		$sql = "INSERT INTO `ply1`.`Products` (`ProductName`, `ProductDesc`, `UnitsInStock`, `Image`)
@@ -70,16 +104,21 @@ class dbConn
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	}
-	
-	function updateProducts($productArr)
+	function deleteProduct($prodID)
 	{
-	
+		$sql = "DELETE FROM 'ply1'.'Products' WHERE 'ProductID' = '$prodID'";
+		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
+	}
+	function updateProducts($prodID, $productArr)
+	{
+		$sql = "UPDATE 'ply1'.'Products' SET 'ProductName' = '$productArr[0]', 'ProductDesc' = '$productArr[1]',
+		'UnitsInStock' = 'productArr[2]', 'Image' = 'productArr[3]' WHERE 'ProductID' = '$prodID'";
+		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	}
 	
 	function executeQuery($sql, $filename) // execute query
 	{
-		if($this->debug == true) { echo("$sql <br>\n"); }
 		$rs = mysql_query($sql, $this->conn) or die("Could not execute query '$sql' in $filename"); 
 		return $rs;
 	}	
