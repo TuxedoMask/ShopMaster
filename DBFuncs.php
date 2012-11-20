@@ -66,7 +66,7 @@ class dbFuncs
 			WHERE 'CustomerID' = '$custid'";
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
-		$sql = "SELECT 'OrderID' FROM 'ply1'.'Orders' WHERE 'CustomerID' = '$custid'"
+		$sql = "SELECT 'OrderID' FROM 'ply1'.'Orders' WHERE 'CustomerID' = '$custid'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 
 		while($orderID = mysql_fetch_array($rs)){}
@@ -84,7 +84,7 @@ class dbFuncs
 	function getAllProducts()
 	{
 		
-		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products'"
+		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		return $rs;
 	}
@@ -92,7 +92,7 @@ class dbFuncs
 	function getOneProduct($prodID)
 	{
 		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products' 
-			WHERE 'ProductID' = '$prodID'"
+			WHERE 'ProductID' = '$prodID'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		return mysql_fetch_array($rs);
 	}
