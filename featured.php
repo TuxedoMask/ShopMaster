@@ -9,7 +9,10 @@
 <body>
     <?php include DBFuncs.php;
     
+    // I assume that I will get a connection if I do this.
     connect();
+    
+    // Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
     
     // This could be supplied by a user, for example
     $featured = '1';
@@ -40,11 +43,18 @@
     	echo $row['ProductDesc'];
     	echo $row['Image'];
     	echo $row['UnitPrice'];
+    	/*
+    	 * This is where I am going to need to use some HTML to format things.
+    	 * */
     }
     
     // Free the resources associated with the result set
     // This is done automatically at the end of the script
     mysql_free_result($result);
+    
+    // End of Copied and Modifed Code from: http://php.net/manual/en/function.mysql-query.php
+    
+    
 	?>
 </body>
 
