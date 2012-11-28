@@ -3,11 +3,11 @@ Okay, these are the pages that we need, According to the SDD:
 Pages Needed:
 -------------
 Home Page
-Product Page
+
 Check out page
-Item added to cart Page	
+	
 Thank you Page	
-Sign in Page		
+
 Create an account Page	
 Owners Tools Page
 Owners Editing Inventory Page	
@@ -17,3 +17,9 @@ Viewing all orders Page
 
 Pages Done:
 -----------
+Sign in Page	
+Item added to cart Page
+
+
+Cart(formatting still to be done)
+Product Page(formatting still)

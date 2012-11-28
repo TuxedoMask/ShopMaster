@@ -1,35 +1,121 @@
-/* applied to the whole page */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+          * {
+            margin: 0;
+            padding: 0;
+          }
+          html, body {
+            height: 100%;
+            overflow: auto;
+	    font-size: 15pt;
+          }
+          #wrapper {
+            
+            width: 96%;
+            overflow: auto;
+	    border-color: gray;
+	    border-style: solid;
+	    margin: 15px 0 0 0;
+            position: absolute;
+          }
+	  #heading {
+		width: 100%;
+		left: 0;
+		top: 0;
+		position: relative;
+		border-bottom:2px inset #EEE;
+		background-image:url('background.png');
+;
+	}
 a {
-  color: #06c;  
+	color: white;
+	
+}
+IMG.maxSized
+{
+max-width: 125px;
+max-height: 125px;
 }
 
-/* rules for sidebar on the right of page */
-#sidebar {
-  width: 10em;
-  float: right;
-  padding: 0 0 0 0;
+<!--
+table {
+    width:100%;
+	border-bottom:2px solid #000;
 }
-#sidebar h2 {
-  padding: 0 0 0 .5em;
-  margin: 0;
-  font-size: 1em;
+th {
+    border-top:1px solid #999;
+    text-align:left;
 }
-#sidebar .section {
-  padding: 1em 0;
-  border-top: 1px solid gray;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
-  font-size: 75%;
-  line-height: 1.5em;
+td {
+	border-bottom:1px solid #999;
+	border-left:1px solid #999;
+	//border-right:1px solid #999;
+text-align:center;
 }
-#sidebar .section ul {
-  list-style-type: square;
-  margin: 0;
-  padding: 0 0 0 20px;
+td.newHead {
+	text-align:right;
 }
+td.centerHead {
+	text-align: center:
+	font-size: 36px;
+	color: #fff;
+	font-style: bold;
+	font-weight: 500;
+	font-family: serif; 
+}
+th {
+    border-bottom:1px solid #999;
+    background-color: #EEE;
+    
+	border-left:1px solid #999;
+	border-right:1px solid #999;
+	text-align:center;
+}
+.outer {
+    position:relative;
+    width:96%;
+    border-bottom:2px solid #000;
+    border-top:2px solid #000;
+	border-right:2px solid #000;
+}
+.inner {
+    height:50%;
+    overflow:auto;
+}
+.header {
+    position:absolute;
+    top:0;
+    left:0;
+    overflow:hidden;
+}
+
+
+#shoppingcart {
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	height: 100px;
+	width: 500px;
+	background: #eee;
+	border: 1px solid #444;
+}
+#shoppingcart p {
+	margin: 0 1em 1em;
+}
+
+h1 {
+	font-size: 140%;
+	margin: 0.5em 1em;
+}
+#contents table {
+	font-size: 130%;
+	border-collapse: collapse;
+}
+
+#contents table td {
+	border: 1px solid #999;
+	width: 20%;
+}
+
+#contents p, #contents button {
+	margin: 1em;
+}
+-->

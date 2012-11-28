@@ -1,8 +1,9 @@
 <?php 
 	include_once ("DBFuncs.php");
+	include_once ("global.php");
 	session_start();
-	header("Location: index2.php?page=featured");
-	exit;
+	
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +22,9 @@
 	</td>
 	<td class='newHead' align='right' width='15%'>
 	    
-		<a href="./index.php?page=login">Log in</a></br>
-          	<a href="./index.php?page=create_account">Create an Account</a></li></br>
-	      	<a href="./index.php?page=cart">Shopping Cart</a></br>
+		<a href="./index2.php?page=login">Log in</a></br>
+          	<a href="./index2.php?page=create_account">Create an Account</a></li></br>
+	      	<a href="./cart.php">Shopping Cart</a></br>
 	    
 	</td>
 	</tr>
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       }
       elseif ($_GET['page'] == 'cart')
       {
-         print "<p>Call to cart should go here</p><br>";
+         include("cart.php");
       }
       else
       {

@@ -1,13 +1,9 @@
 <?php
-class dbFuncs
+class DBFuncs
 {
 	var $conn;
 
-	function dbFuncs()
-	{
-		$conn = "";
-	}
-	function connect()
+	function DBFuncs()
 	{
 		$conn = mysql_connect("studentdb.gl.umbc.edu", "ply1", "ThereisnoP@ssw0rd")
 			or die ("Could not connect to database" . mysql_error());
@@ -16,29 +12,38 @@ class dbFuncs
 		
 		$this->conn = $conn;
 	}
+	//function connect()
+	//{
+	//	$conn = mysql_connect("studentdb.gl.umbc.edu", "ply1", "ThereisnoP@ssw0rd")
+	//		or die ("Could not connect to database" . mysql_error());
+	//		
+	//	$rs = mysql_select_db("ply1", $conn) or die ("Could not select database");
+	//	
+	//	$this->conn = $conn;
+	//}
 	
 	function userSignup($email, $pw)
 	{
-		$sql = "SELECT 'E-mail' FROM 'ply1.'Customers' WHERE 'E-mail' = '$email'";
+		$sql = "SELECT * FROM `ply1`.`Customers` WHERE `E-mail` = '".$email."'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-		$row = mysql_fetch_row($rs);
+		if (mysql_num_rows($rs) > 0)
+		{
+			return 0;
+		}
+		$sql = "INSERT INTO `ply1`.`Customers` (`E-mail`, `Password`)
+			VALUES ('".$email."', '".$pw."')";
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		
-		if ($email == $row[0])
-		{
-			return false;
-		}
-		else
-		{
-			$sql = "INSERT INTO 'ply1'.'Customers' ('E-mail', 'Password')
-				VALUES ('".$email."', '".$pw."')";
-			$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-			return true;
-		}
+		$sql = "SELECT `CustomerID` FROM `ply1`.`Customers` WHERE `E-mail` = '".$email."'";
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+		$row = mysql_fetch_assoc($rs);
+		return $row['CustomerID'];
+		
 	}	
 	
 	function userLogin($userName, $pw)
 	{
-		$sql = "SELECT 'CustomerID', 'Password' FROM 'ply1'.'Customers' WHERE 'E-mail' = '$userName'";
+		$sql = "SELECT `CustomerID`, `Password` FROM `ply1`.`Customers` WHERE `E-mail` = '".$userName."'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		$row = mysql_fetch_row($rs);
 		
@@ -91,8 +96,8 @@ class dbFuncs
 	//Returns an array
 	function getOneProduct($prodID)
 	{
-		$sql = "SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products' 
-			WHERE 'ProductID' = '$prodID'";
+		$sql = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` 
+			WHERE `ProductID` = '".$prodID."'";
 		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		return mysql_fetch_array($rs);
 	}
@@ -116,10 +121,13 @@ class dbFuncs
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
 	}
-	
+	function execute($sql)
+	{
+		return $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+	}
 	function executeQuery($sql, $filename) // execute query
 	{
-		$rs = mysql_query($sql, $this->conn) or die("Could not execute query '$sql' in $filename"); 
+		$rs = mysql_query($sql, $this->conn) or die("Could not execute query '$sql' in $filename " . mysql_error()); 
 		return $rs;
 	}	
 }	

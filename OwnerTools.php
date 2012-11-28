@@ -4,25 +4,25 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
     <title>ShopMaster</title>
-  </head>
-  <img src="logo.png" alt="ShopMaster">
-
-    <div id="sidebar">
-      <div class="section">
-        <ul>
-          <li><a href="./OwnerTools.php?page=login">Log in</a></li>
-          <li><a href="./OwnerTools.php?page=create_account">Create an Account</a></li>
-        </ul>
-      </div>
-      <div id="sidebar2">
-        <div class="section">
-          <ul>
-          <li><a href="./OwnerTools.php?page=cart">Shopping Cart</a></li>
-        </ul>
-      </div>
-    </div>
-   </div>
-    
+	  </head>
+<div id='heading'>
+<table>
+	<tr>
+	<td align='left' width='15%'>
+	</td>
+	<td align='center' width='70%'>
+		<img src='logo.png' align='center' width='100%'>
+	</td>
+	<td class='newHead' align='right' width='15%'>
+	    
+		<a href="./OwnerTools.php?page=login">Log in</a></br>
+          	<a href="./OwnerTools.php?page=create_account">Create an Account</a></li></br>
+	      	<a href="./OwnerTools.php?page=cart">Shopping Cart</a></br>
+	    
+	</td>
+	</tr>
+</table>
+</div>
    <h1> Owner's Tools </h1>
 
   </body>
@@ -42,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
    {
       if ($_GET['page'] == 'login')
       {
-         print "<p>Call to login should go here</p><br>";
+         include("login.html");
       }
       elseif ($_GET['page'] == 'create_account')
       {
-         print "<p>Call to create_account should go here</p><br>";
+         include("createAccount.html");
       }
       elseif ($_GET['page'] == 'cart')
       {
