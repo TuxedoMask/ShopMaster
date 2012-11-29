@@ -32,7 +32,7 @@
         	{
             // echo out the contents of each row into a table
             echo "<tr>";
-            $row = mysql_fetch_array($result);
+            $row = mysql_fetch_assoc($result);
             echo "Start", $row['ProductID'], "End</br>";
             echo '<td><a href="items.php?prodID='.$row['ProductID'].'">'.$ProductName.'</a></td>';
 //            echo '<td>' . mysql_result($result, $i, 'ProductName') . '</td>';
