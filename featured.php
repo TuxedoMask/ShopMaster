@@ -1,3 +1,8 @@
+<?php 
+  include_once ("DBFuncs.php");
+  session_start(); 
+	
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 
@@ -7,10 +12,9 @@
 </head>
 
 <body>
-    <?php include DBFuncs.php;
-    
-    // I assume that I will get a connection if I do this.
-    connect();
+    <?php 
+    // I assume that I will get a connection if I do this. [Thanks Brian for fixing it.]
+    $dbConn = new DBFuncs();
     
     // Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
     
@@ -20,11 +24,11 @@
     // Formulate Query
     // This is the best way to perform an SQL query
     // For more examples, see mysql_real_escape_string()
-    $query = sprintf("SELECT 'ProductName', 'ProductDesc', 'UnitsInStock', 'Image', 'UnitPrice' FROM 'ply1'.'Products' 
-			WHERE 'Featured' = '$featured'");
+    $query = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` 
+			WHERE `Featured` = '".$featured."'";
     
-    // Perform Query
-    $result = mysql_query($query);
+    // Perform Query [Thanks Brian again]
+    $result = $dbConn->executeQuery($query, $_SERVER["SCRIPT_NAME"]);
     
     // Check result
     // This shows the actual query sent to MySQL, and the error. Useful for debugging.
