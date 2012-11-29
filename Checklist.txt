@@ -2,7 +2,7 @@ Okay, these are the pages that we need, According to the SDD:
 
 Pages Needed:
 -------------
-Home Page
+
 
 Check out page
 	
@@ -17,6 +17,7 @@ Viewing all orders Page
 
 Pages Done:
 -----------
+Home Page (Formatting will be done later)
 Sign in Page	
 Item added to cart Page
 Create an account Page
