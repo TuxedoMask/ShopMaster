@@ -1,5 +1,5 @@
 <?php
-	include_once ("DBFuncs.php");
+	include_once ("DBFuncsP.php");
 	include_once ("global.php");
 	session_start();
 ?>
@@ -32,9 +32,8 @@
         	{
             // echo out the contents of each row into a table
             echo "<tr>";
-            $row = mysql_fetch_assoc($result);
-            echo "Start", $row['ProductID'], "End</br>";
-            echo '<td><a href="items.php?prodID='.$row['ProductID'].'">'.$ProductName.'</a></td>';
+            $row = mysql_fetch_array($result);
+            echo '<td><a href="items.php?prodID='.$row['ProductID'].'">'. mysql_result($result, $i, 'ProductName') .'</a></td>';
 //            echo '<td>' . mysql_result($result, $i, 'ProductName') . '</td>';
             echo '<td>' . mysql_result($result, $i, 'ProductDesc') . '</td>';
             echo "<td><img src=\"",mysql_result($result, $i, 'Image'), "\" height=\"100\" style=\"max-width: 120px\"></td>";

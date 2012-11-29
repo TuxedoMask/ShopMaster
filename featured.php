@@ -22,7 +22,7 @@
     
     // Formulate Query - This is the best way to perform an SQL query
     // For more examples, see mysql_real_escape_string()
-    $query = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` WHERE `Featured` = '".$featured."'";
+    $query = "SELECT `ProductID`, `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` WHERE `Featured` = '".$featured."'";
     
     // Perform Query [Thanks Brian again]
     $result = $db->executeQuery($query, $_SERVER["SCRIPT_NAME"]);
@@ -75,14 +75,14 @@
    		
    	// OKay, we have our random items, lets display them
    	for ($index = 0; $index < count($array); $index++)
-   	{
+   		{
    		mysql_data_seek($result, $array[$index]);
    		$row = mysql_fetch_array($result);
-    	echo "<a href=\"./items.php?prodID=\"",$prodID , "\">",$row['ProductName'], "</a><br>";
+    	echo '<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a></br>';
 //     	echo $row['ProductDesc'], "<br>";
 //     	echo "<img src=", $row['Image'], "></br>";
 //     	echo "Price: $", $row['UnitPrice'], "</br>";
-   	}
+   		}
     
     /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
      * Brian:  oh, when you need to link to the product page
