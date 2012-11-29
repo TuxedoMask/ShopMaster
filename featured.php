@@ -1,7 +1,6 @@
 <?php 
   include_once ("DBFuncs.php");
-  session_start(); 
-	
+  session_start();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
@@ -12,41 +11,83 @@
 </head>
 
 <body>
-    <?php 
+	<!-- Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php --> 
+    <?php
+    
     // I assume that I will get a connection if I do this. [Thanks Brian for fixing it.]
     $dbConn = new DBFuncs();
-    
-    // Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
     
     // This could be supplied by a user, for example
     $featured = '1';
     
-    // Formulate Query
-    // This is the best way to perform an SQL query
+    // Formulate Query - This is the best way to perform an SQL query
     // For more examples, see mysql_real_escape_string()
-    $query = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` 
-			WHERE `Featured` = '".$featured."'";
+    $query = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` WHERE `Featured` = '".$featured."'";
     
     // Perform Query [Thanks Brian again]
     $result = $dbConn->executeQuery($query, $_SERVER["SCRIPT_NAME"]);
     
-    // Check result
-    // This shows the actual query sent to MySQL, and the error. Useful for debugging.
-    if (!$result) {
+    // Check result - This shows the actual query sent to MySQL, and the error. Useful for debugging.
+    if (!$result)
+    	{
     	$message  = 'Invalid query: ' . mysql_error() . "\n";
     	$message .= 'Whole query: ' . $query;
     	die($message);
-    }
+    	}
     
     // Use result
     // Attempting to print $result won't allow access to information in the resource
     // One of the mysql result functions must be used
     // See also mysql_result(), mysql_fetch_array(), mysql_fetch_row(), etc.
-    while ($row = mysql_fetch_assoc($result)) {
+    
+    // initialize counters
+    $countOfFeaturedItems = 0;
+    $maxItems = 6;
+    
+    // Find out how many items are in the table
+  	while ($row = mysql_fetch_assoc($result))
+  		{
+  		$countOfFeaturedItems += 1;
+  		}
+  	
+  	// Print statement to check
+    echo "Items in table: ", $countOfFeaturedItems, "</br>";
+    $maxFeaturedItemsIndex = $countOfFeaturedItems-1;
+    
+    //http://stackoverflow.com/questions/11239563/random-number-generation-without-duplicates
+    $array = array();
+    for($index = 0; $index < $countOfFeaturedItems && $index < $maxItems; $index++)
+   		{
+   		$randomNum = rand(0, $maxFeaturedItemsIndex);
+   		while(in_array($randomNum, $array))
+    		{
+    		$randomNum = rand(0, ($maxFeaturedItemsIndex));
+    		}
+    	$array[] = $randomNum;
+    	
+    	// Print to Check
+    	//echo "Got here ", $randomNum, "</br>";
+   		}
+   	
+   	// OKay, we have our random items, lets display them
+   	for ($index = 0; $index < count($array); $index++)
+   	{
+   		mysql_data_seek($result, $array[$index]);
+   		$row = mysql_fetch_assoc($result);
     	echo $row['ProductName'], "<br>";
-    	echo $row['ProductDesc'], "<br>";
-    	echo "<img src=", $row['Image'], "></br>";
-    	echo "Price: $", $row['UnitPrice'], "</br>";
+   	}
+    
+    
+    
+    // Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
+    // Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
+    mysql_data_seek($result, 0);
+    
+  // while ($row = mysql_fetch_assoc($result)) {
+   // 	echo $row['ProductName'], "<br>";
+    	//echo $row['ProductDesc'], "<br>";
+    	//echo "<img src=", $row['Image'], "></br>";
+    	//echo "Price: $", $row['UnitPrice'], "</br>";
     	/*
     	 * This is where I am going to need to use some HTML to format things.
     	 * I want to have:
@@ -70,15 +111,13 @@
 <!-- Bottom stuffs use frames for lower portion. -->
 </frameset>
     	 */
-    }
+   // }
     
     // Free the resources associated with the result set
     // This is done automatically at the end of the script
     mysql_free_result($result);
     
     // End of Copied and Modifed Code from: http://php.net/manual/en/function.mysql-query.php
-    
-    
 	?>
 </body>
 
