@@ -78,7 +78,7 @@
    	{
    		mysql_data_seek($result, $array[$index]);
    		$row = mysql_fetch_array($result);
-    	echo $row['ProductName'], "<br>";
+    	echo "<a href=\"./items.php?prodID=\"",$prodID , "\">",$row['ProductName'], "</a><br>";
 //     	echo $row['ProductDesc'], "<br>";
 //     	echo "<img src=", $row['Image'], "></br>";
 //     	echo "Price: $", $row['UnitPrice'], "</br>";
