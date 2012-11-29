@@ -43,10 +43,10 @@
     // One of the mysql result functions must be used
     // See also mysql_result(), mysql_fetch_array(), mysql_fetch_row(), etc.
     while ($row = mysql_fetch_assoc($result)) {
-    	echo $row['ProductName'];
-    	echo $row['ProductDesc'];
-    	echo $row['Image'];
-    	echo $row['UnitPrice'];
+    	echo $row['ProductName'], "<br>";
+    	echo $row['ProductDesc'], "<br>";
+    	echo "<img src=", $row['Image'], "></br>";
+    	echo "Price: $", $row['UnitPrice'], "</br>";
     	/*
     	 * This is where I am going to need to use some HTML to format things.
     	 * I want to have:
