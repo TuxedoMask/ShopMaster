@@ -35,7 +35,7 @@ if ($id > 0)
 	    
 		<a href="./OwnerTools.php?page=login">Log in</a></br>
           	<a href="./OwnerTools.php?page=create_account">Create an Account</a></li></br>
-	      	<a href="./OwnerTools.php?page=cart">Shopping Cart</a></br>
+	      	<a href="./cart.php">Shopping Cart</a></br>
 	    
 	</td>
 	</tr>

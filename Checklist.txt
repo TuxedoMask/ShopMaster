@@ -2,27 +2,24 @@ Okay, these are the pages that we need, According to the SDD:
 
 Pages Needed:
 -------------
+Home Page
 
 Check out page
 	
 Thank you Page	
 
-Create an account Page	
+	
 Owners Tools Page
 Owners Editing Inventory Page	
 Owner Adding to Inventory Page	
 Viewing all orders Page
-
-Pages In Progress:
-------------------
-Home Page > It now displays stuff, just not really nicely yet. Also need to do the everything in store.
 
 
 Pages Done:
 -----------
 Sign in Page	
 Item added to cart Page
-
+Create an account Page
 
 Cart(formatting still to be done)
 Product Page(formatting still)

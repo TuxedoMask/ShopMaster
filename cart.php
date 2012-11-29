@@ -13,15 +13,22 @@ switch ($action) {
 	case 'add':
 		
 		$id = $_POST['id'];
-		
+		$row = $db->getOneProduct($id);
 		$quantity = $_POST['quantity'];
-		if ($cart) {
-			$cart .= ','.$id;
-		} else {
-			$cart = $id;
+		if ($quantity <= $row['UnitsInStock'])
+		{
+			if ($cart) {
+				$cart .= ','.$id;
+			} else {
+				$cart = $id;
+			}
+			for($i = 1; $i < $quantity; $i++)
+				$cart .= ','.$id;
 		}
-		for($i = 1; $i < $quantity; $i++)
-			$cart .= ','.$id;
+		else
+		{
+			$added = false;
+		}
 		break;
 	case 'delete':
 		if ($cart) {
@@ -56,13 +63,23 @@ switch ($action) {
 						}
 					}
 				}
-				for ($i=1;$i<=$value;$i++) {
+				$row = $db->getOneProduct($id);
+				if($row['UnitsInStock'] < $value) {
+					$added = false;
+					$min = $row['UnitsInStock'];	
+				}
+				else
+				{	$added = true;
+					$min = $value;
+				}
+				for ($i=1;$i<=$min;$i++) {
 					if ($newcart != '') {
 						$newcart .= ','.$id;
 					} else {
 						$newcart = $id;
 					}
 				}
+				
 			}
 		}
 	}
@@ -107,17 +124,22 @@ $_SESSION['cart'] = $cart;
 </table>
 </div>
  
-
+<div style="text-align:center;"> 
 <div id="contents">
 
 <h1>Please check quantities...</h1>
 
 <?php
+if(!$added)
+{
+	echo("Sorry, we only have " . $row['UnitsInStock'] . " " .$row['ProductName'] . " in stock.");
+}
+
 echo showCart();
 ?>
 
 <p><a href="index2.php">Continue Shopping</a></p>
-
+</div>
 </div>
 
 </body>
@@ -145,24 +167,26 @@ function showCart() {
 			$contents[$item] = (isset($contents[$item])) ? $contents[$item] + 1 : 1;
 		}
 		$output[] = '<form action="cart.php?action=update" method="post" id="cart">';
-		$output[] = '<table>';
+		$output[] = '<table class="center">';
 		foreach ($contents as $id=>$Quantity) {
 			$sql = 'SELECT * FROM Products WHERE ProductID = '.$id;
 			$result = $db->execute($sql);
 			if ( $row=mysql_fetch_array($result))
 			{extract($row);
 			$output[] = '<tr>';
-			$output[] = '<td><button type="submit" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			$output[] = '<td>'.$ProductName.'</td>';
+			$output[] = '<td><button type="submit" style="width:90%" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			$output[] = '<td>'.$ProductName.'</td>';
 			$output[] = '<td>$'.$UnitPrice.'</td>';
-			$output[] = '<td><input type="text" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
+			$output[] = '<td><input type="text" style="width:90%" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
 			$output[] = '<td>$'.($UnitPrice * $Quantity).'</td>';
 			$total += $UnitPrice * $Quantity;
 			$output[] = '</tr>';
 			}
 		}
 		$output[] = '</table>';
-		$output[] = '<p>Grand total: $'.$total.'</strong></p>';
-		$output[] = '<div><button type="submit">Update cart</button></div>';
+		$output[] = '<div style="width:85%;" align="right"><button type="submit">Update cart</button>' .
+				'Grand total: $'.$total.'</div>';
+		$output[] = '</table>';
+		
 		$output[] = '</form>';
 	} else {
 		$output[] = '<p>You shopping cart is empty.</p>';

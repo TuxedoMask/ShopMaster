@@ -3,6 +3,9 @@
             padding: 0;
           }
           html, body {
+		min-width: 900px;
+		background: #556691;
+		text-align:center;
             height: 100%;
             overflow: auto;
 	    font-size: 15pt;
@@ -17,11 +20,12 @@
             position: absolute;
           }
 	  #heading {
+		min-width: 1024px;
 		width: 100%;
 		left: 0;
 		top: 0;
 		position: relative;
-		border-bottom:2px inset #EEE;
+		//border-bottom:2px inset #EEE;
 		background-image:url('background.png');
 ;
 	}
@@ -38,15 +42,15 @@ max-height: 125px;
 <!--
 table {
     width:100%;
-	border-bottom:2px solid #000;
+	//border-bottom:2px solid #000;
 }
 th {
-    border-top:1px solid #999;
+   // border-top:1px solid #999;
     text-align:left;
 }
 td {
-	border-bottom:1px solid #999;
-	border-left:1px solid #999;
+	//border-bottom:1px solid #999;
+	//border-left:1px solid #999;
 	//border-right:1px solid #999;
 text-align:center;
 }
@@ -72,9 +76,9 @@ th {
 .outer {
     position:relative;
     width:96%;
-    border-bottom:2px solid #000;
-    border-top:2px solid #000;
-	border-right:2px solid #000;
+   // border-bottom:2px solid #000;
+   // border-top:2px solid #000;
+	//border-right:2px solid #000;
 }
 .inner {
     height:50%;
@@ -89,6 +93,7 @@ th {
 
 
 #shoppingcart {
+	text-align:center;
 	position: absolute;
 	top: 50px;
 	left: 50px;
@@ -105,7 +110,16 @@ h1 {
 	font-size: 140%;
 	margin: 0.5em 1em;
 }
-#contents table {
+#contents {
+	text-align:center;
+	min-width: 1024px;
+	background: #556691;
+	border: 0px solid #333;
+}
+#contents table.center {
+	margin-left:auto;
+	margin-right:auto;
+	width:70%;
 	font-size: 130%;
 	border-collapse: collapse;
 }
