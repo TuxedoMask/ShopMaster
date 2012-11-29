@@ -11,11 +11,10 @@
 </head>
 
 <body>
-	<!-- Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php --> 
-    <?php
+    <?php //<!-- Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
     
     // I assume that I will get a connection if I do this. [Thanks Brian for fixing it.]
-    $dbConn = new DBFuncs();
+    global $db;
     
     // This could be supplied by a user, for example
     $featured = '1';
@@ -25,7 +24,7 @@
     $query = "SELECT `ProductName`, `ProductDesc`, `UnitsInStock`, `Image`, `UnitPrice` FROM `ply1`.`Products` WHERE `Featured` = '".$featured."'";
     
     // Perform Query [Thanks Brian again]
-    $result = $dbConn->executeQuery($query, $_SERVER["SCRIPT_NAME"]);
+    $result = $db->executeQuery($query, $_SERVER["SCRIPT_NAME"]);
     
     // Check result - This shows the actual query sent to MySQL, and the error. Useful for debugging.
     if (!$result)
@@ -51,7 +50,7 @@
   		}
   	
   	// Print statement to check
-    echo "Items in table: ", $countOfFeaturedItems, "</br>";
+    //echo "Items in table: ", $countOfFeaturedItems, "</br>";
     $maxFeaturedItemsIndex = $countOfFeaturedItems-1;
     
     //http://stackoverflow.com/questions/11239563/random-number-generation-without-duplicates
@@ -69,25 +68,31 @@
     	//echo "Got here ", $randomNum, "</br>";
    		}
    	
+   	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
+   	// Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
+   	mysql_data_seek($result, 0);
+   		
    	// OKay, we have our random items, lets display them
    	for ($index = 0; $index < count($array); $index++)
    	{
    		mysql_data_seek($result, $array[$index]);
-   		$row = mysql_fetch_assoc($result);
+   		$row = mysql_fetch_array($result);
     	echo $row['ProductName'], "<br>";
+//     	echo $row['ProductDesc'], "<br>";
+//     	echo "<img src=", $row['Image'], "></br>";
+//     	echo "Price: $", $row['UnitPrice'], "</br>";
    	}
     
+    /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
+     * Brian:  oh, when you need to link to the product page
+     * 1 sec
+     * Sent at 11:38 PM on Wednesday
+     * Brian:  <a href="./items.php?prodID="<?php echo($prodID);?>">
+     * or however you stored the product id
+     * */
     
-    
-    // Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
-    // Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
-    mysql_data_seek($result, 0);
-    
-  // while ($row = mysql_fetch_assoc($result)) {
-   // 	echo $row['ProductName'], "<br>";
-    	//echo $row['ProductDesc'], "<br>";
-    	//echo "<img src=", $row['Image'], "></br>";
-    	//echo "Price: $", $row['UnitPrice'], "</br>";
+
+
     	/*
     	 * This is where I am going to need to use some HTML to format things.
     	 * I want to have:
@@ -111,7 +116,6 @@
 <!-- Bottom stuffs use frames for lower portion. -->
 </frameset>
     	 */
-   // }
     
     // Free the resources associated with the result set
     // This is done automatically at the end of the script
