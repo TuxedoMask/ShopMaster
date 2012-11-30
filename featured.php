@@ -78,14 +78,28 @@
    	echo '<table><tr>';
    	for ($index = 0; $index < count($array); $index++)
    		{
-   		echo '<td>';
-   		mysql_data_seek($result, $array[$index]);
-   		$row = mysql_fetch_array($result);
-    	echo '<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a></br>';
+   			// echo out the contents of each row into a table
+   			echo "<tr>";
+   			$row = mysql_fetch_array($result);
+   			echo '<td><a href="items.php?prodID='.$row['ProductID'].'">'. mysql_result($result, $array[$index], 'ProductName') .'</a></td>';
+   			//            echo '<td>' . mysql_result($result, $i, 'ProductName') . '</td>';
+   			echo '<td>' . mysql_result($result, $array[$index], 'ProductDesc') . '</td>';
+   			echo "<td><img src=\"",mysql_result($result, $array[$index], 'Image'), "\" height=\"100\" style=\"max-width: 120px\"></td>";
+   			//echo '<td>' . mysql_result($result, $i, 'ImageName') . '</td>';
+   			//echo '<td><a href="edit.php?id=' . mysql_result($result, $i, 'id') . '">Edit</a></td>';
+   			//echo '<td><a href="delete.php?id=' . mysql_result($result, $i, 'id') . '">Delete</a></td>';
+   			echo "</tr>";
+   			echo "";
+   			
+   		//old code
+//    	echo '<td>';
+//    	mysql_data_seek($result, $array[$index]);
+//    	$row = mysql_fetch_array($result);
+//     	echo '<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a></br>';
 //     	echo $row['ProductDesc'], "<br>";
-     	echo "<img src=", $row['Image'], "></br>";
+//      echo "<img src=", $row['Image'], "></br>";
 //     	echo "Price: $", $row['UnitPrice'], "</br>";
-     	echo '</td>';
+//      echo '</td>';
    		}
    	echo '</tr></table>';
     /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
