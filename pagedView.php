@@ -5,7 +5,6 @@
 	include_once ("layout.php");
 	
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <body>
 
@@ -75,11 +74,9 @@ echo '</div>';
         echo "<center><p><a href='allView.php'>View All</a> | <b>View Page:</b> ";
         for ($i = 1; $i <= $total_pages; $i++)
         {
-                echo "<a href='pagedView.php?page=$i'>$i</a> ";
+                echo "<a href='index.php?page=$i'>$i</a> ";
         }
         echo "</p></center>";
         
 ?>
 
-</body>
-</html>

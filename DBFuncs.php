@@ -57,27 +57,25 @@ class DBFuncs
 	//Items a 2d array containing, productId - UnitPrice - Quantity
 	function addOrder($custid, $items, $billInfo, $shipInfo)
 	{	
+		//echo($items[0] . " " . $items[1]." ".$items[2]);
 		$sql = "INSERT INTO `ply1`.`Orders` (`CustomerID`, `OrderDate`, `ShipName`, `ShipEmail`, `ShipPhone`,
-			`ShipAddress`, `ShipCity`, `ShipCountry`, `ShipPostalCode`) VALUES ('".$custid."', '".$shipInfo[0]."',
-			'".$shipInfo[1]."', '".$shipInfo[2]."', '".$shipInfo[3]."', '".$shipInfo[4]."', '".$shipInfo[5]."',
-			'".$shipInfo[6]."', '".$shipInfo[7]."')";
+			`ShipAddress`, `ShipCity`, `ShipCountry`, `ShipPostalCode`, `ShipState`) VALUES ('".$custid."', '$shipInfo[OrderDate]',
+			'".$shipInfo[ShipName]."', '".$shipInfo[ShipEmail]."', '".$shipInfo[ShipPhone]."', '".$shipInfo[ShipAddress]."', '".$shipInfo[ShipCity]."',
+			'".$shipInfo[ShipCountry]."', '".$shipInfo[ShipPostalCode]."', '".$shipInfo[ShipState]."')";
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+	
+		$orderID = mysql_insert_id();
 
-		$sql = "UPDATE `ply1`.`Customers` SET `LastName` = '$billInfo[0]', `FirstName` = '$billInfo[1]', `PhoneNo` = '$billInfo[2]',
-			`Address` = '$billInfo[3]', `City` = '$billInfo[4]', `Country` = '$billInfo[5]', `PostalCode` = '$billInfo[5]'
+		$sql = "UPDATE `ply1`.`Customers` SET `LastName` = '$billInfo[LastName]', `FirstName` = '$billInfo[FirstName]', `PhoneNo` = '$billInfo[PhoneNo]',
+			`Address` = '$billInfo[Address]', `City` = '$billInfo[City]', `Country` = '$billInfo[Country]', `PostalCode` = '$billInfo[PostalCode]'
 			WHERE `CustomerID` = '$custid'";
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	
-		$sql = "SELECT `OrderID` FROM `ply1`.`Orders` WHERE `CustomerID` = '$custid'";
-		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-
-		while($orderID = mysql_fetch_array($rs)){}
 		
-		//$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]); 
-		for($i = 0; $i <= count($items); $i++)
+		for($i = 0; $i < count($items); $i++)
 		{
-			$sql = "INSERT INTO `ply1`.`Order Items` (`OrderID`, `ProductID`, `UnitPrice`, `Quantity`)
-				VALUES ('".$orderID."','".$items[$i][0]."','".$items[$i][1]."','".$items[$i][2]."')";
+			$sql = "INSERT INTO `ply1`.`Order Details` (`OrderID`, `ProductID`, `UnitPrice`, `Quantity`)
+				VALUES ('".$orderID."','".$items[$i++]."','".$items[$i++]."','".$items[$i]."')";
 			$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
 		}
 	

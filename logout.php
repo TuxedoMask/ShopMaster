@@ -1,5 +1,5 @@
 <?php 
 	session_start();
 	session_destroy();
-	header("Location: index2.php?page=featured");
+	header("Location: index.php");
 ?>

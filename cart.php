@@ -1,11 +1,11 @@
 <?php
-// Include MySQL class
-require_once('DBFuncs.php');
-// Include database connection
-require_once('global.php');
-
 // Start the session
 session_start();
+// Includes
+include_once('DBFuncs.php');
+include_once('global.php');
+include_once('layout.php');
+
 // Process actions
 $cart = $_SESSION['cart'];
 $action = $_GET['action'];
@@ -91,43 +91,8 @@ switch ($action) {
 }
 $_SESSION['cart'] = $cart;
 ?>
-<!DOCTYPE html>
-	
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<title>Cart</title>
-	<link rel="stylesheet" href="style.css" />
-</head>
 
-<body>
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    <title>ShopMaster</title>
-	  </head>
-<div id='heading'>
-<table>
-	<tr>
-	<td align='left' width='15%'>
-	</td>
-	<td align='center' width='70%'>
-		<img src='logo.png' align='center' width='100%'>
-	</td>
-	<td class='newHead' align='right' width='15%'>
-	    
-		<a href="./index2.php?page=login">Log in</a></br>
-          	<a href="./index2.php?page=create_account">Create an Account</a></li></br>
-	      	<a href="./cart.php">Shopping Cart</a></br>
-	    
-	</td>
-	</tr>
-</table>
-</div>
  
-<div style="text-align:center;"> 
 <div id="contents">
 
 <h1>Shopping Cart</h1>
@@ -139,11 +104,11 @@ if(!$added)
 }
 
 echo showCart();
-?>
 
-<p><a href="index2.php?page=home">Continue Shopping</a></p>
-</div>
-</div>
+
+echo'<p><a href="index.php?page=home">Continue Shopping</a></p></div>';
+include_once('footer.html');
+?>
 
 </body>
 </html>
@@ -178,7 +143,7 @@ function showCart() {
 			{
 				extract($row);
 				$output[] = '<tr>';
-				$output[] = '<td><button type="submit" style="width:90%" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			
+				$output[] = '<td><button type="submit" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			
 				$output[] = '<td><a href="items.php?prodID='.$row['ProductID'].'">'.$ProductName.'</td>';
 				$output[] = '<td>$'.$UnitPrice.'</td>';
 				$output[] = '<td><input type="text" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
@@ -188,10 +153,10 @@ function showCart() {
 			}
 		}
 		$output[] = '</table>';
-		$output[] = '<div style="width:85%;" align="right"><button type="submit">Update cart</button>' .
-				'Grand total: $'.$total.' <p></div>';
+		$output[] = '<div style="width:95%;" align="right"><button type="submit">Update cart</button>' .
+				'<strong>Grand total: $'.$total.' </strong></div>';
 		
-		$output[] = '</form></br><form action="./checkout.php" method="post"><button type="submit">Checkout</button>';
+		$output[] = '</form><form action="./checkout.php?action=shipping" method="post"><button type="submit">Checkout</button>';
 	} else {
 		$output[] = '<p>Your shopping cart is empty.</p>';
 	}

@@ -38,4 +38,6 @@ else
 	  include("pagedView.php");
 }
 
+
+include("footer.html");
 ?>

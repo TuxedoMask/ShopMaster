@@ -4,10 +4,7 @@ Pages Needed:
 -------------
 Home Page
 
-Check out page
-	
-Thank you Page	
-
+Check out page (formatting/validation)
 	
 Owners Tools Page
 Owners Editing Inventory Page	
@@ -20,6 +17,6 @@ Pages Done:
 Sign in Page	
 Item added to cart Page
 Create an account Page
-
-Cart(formatting still to be done)
-Product Page(formatting still)
+Cart
+Product Page
+Thank you Page	

@@ -47,25 +47,27 @@ else
 //-->
 </SCRIPT>
 </head>
-<center>
-<table style="width:70%">
-  <tr style="width:300px">
-    <td style="text-align:left"><font size=20><?php echo($row['ProductName']);?></font></td>
-	<td style="text-align:right"><font size=20>$<?php echo($row['UnitPrice']);?></font></td>
-  </tr>
-  <tr>
-	<td width="300" height="300"><img src='<?php echo($row['Image']);?>' width="100%"></td>
-	<td style="text-align:right"><?php echo($row['ProductDesc']);?></td>
-  </tr>
-  <tr><td>
-  <FORM ACTION="cart.php?action=add" METHOD=POST>
-  Quantity 
-  <INPUT NAME="quantity" SIZE=5 MAXLENGTH=5
-   onKeyPress="return numbersonly(this, event)">
-  <INPUT TYPE=SUBMIT VALUE="Add to Cart">
-  <INPUT TYPE=HIDDEN NAME="id" VALUE="<?php echo($id);?>">
-  </td></tr>
-</FORM>
+<div id="items">
+	<div class="item">
+  		<img src='<?php echo($row['Image']);?>'>
+		<div class="desc">
+    			<div style="font-size:24pt;"><?php echo($row['ProductName']);?></div></br>
+			<?php echo($row['ProductDesc']);?></br>
+		</div>
+		<div class="addCart">
+  			<div style="vertical-align:text-bottom; font-size:18pt;">
+ 				 <FORM ACTION="cart.php?action=add" METHOD=POST>
+ 				 Quantity 
+ 				 <INPUT NAME="quantity" SIZE=5 MAXLENGTH=5
+   				onKeyPress="return numbersonly(this, event)">
+				$<?php echo($row['UnitPrice']);?>
+  				<INPUT TYPE=SUBMIT VALUE="Add to Cart">
+ 				 <INPUT TYPE=HIDDEN NAME="id" VALUE="<?php echo($id);?>">
   
+				</FORM>
+			</div>	
+		</div>
+  	</div>
+</div>
   
   
