@@ -70,21 +70,24 @@
     	//echo "Got here ", $randomNum, "</br>";
    		}
    	
-   	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
+   	// Reset my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
    	// Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
    	mysql_data_seek($result, 0);
    		
    	// OKay, we have our random items, lets display them
+   	echo '<table><tr>';
    	for ($index = 0; $index < count($array); $index++)
    		{
+   		echo '<td>';
    		mysql_data_seek($result, $array[$index]);
    		$row = mysql_fetch_array($result);
     	echo '<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a></br>';
 //     	echo $row['ProductDesc'], "<br>";
-//     	echo "<img src=", $row['Image'], "></br>";
+     	echo "<img src=", $row['Image'], "></br>";
 //     	echo "Price: $", $row['UnitPrice'], "</br>";
+     	echo '</td>';
    		}
-    
+   	echo '</tr></table>';
     /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
      * Brian:  oh, when you need to link to the product page
      * 1 sec
