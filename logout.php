@@ -1,6 +1,5 @@
 <?php 
-	include_once ("DBFuncs.php");
 	session_start();
+	session_destroy();
 	header("Location: index2.php?page=featured");
-	exit;
 ?>

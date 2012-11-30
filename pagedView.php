@@ -1,7 +1,9 @@
 <?php
+	session_start();
 	include_once ("DBFuncs.php");
 	include_once ("global.php");
-	session_start();
+	include_once ("layout.php");
+	
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
@@ -19,7 +21,7 @@
 	*/
         
         // number of results to show per page
-        $per_page = 25;
+        $per_page = 30;
         
         // figure out the total pages in the database
         $result = $db->getAllProducts();
@@ -61,26 +63,28 @@
                 
         // display data in table
         echo "<table border='1' cellpadding='10'>";
-        echo "<tr> <th>Item</th> <th>Description</th></tr>";
+        //echo "<tr> <th>Item</th> <th>Description</th></tr>";
 
         // loop through results of database query, displaying them in the table 
         for ($i = $start; $i < $end; $i++)
         {
                 // make sure that PHP doesn't try to show results that don't exist
                 if ($i == $total_results) { break; }
-        
+        	  if ($i % 6 == 0) { echo "</tr><tr>"; }
                 // echo out the contents of each row into a table
-                echo "<tr>";
-                echo '<td><a href="items.php?prodID='.mysql_result($result, $i, 'ProductID').'">'. mysql_result($result, $i, 'ProductName') .'</a></td>';
-                echo '<td>' . mysql_result($result, $i, 'ProductDesc') . '</td>';
-                echo "<td><img src=\"",mysql_result($result, $i, 'Image'), "\" height=\"100\" style=\"max-width: 120px\"></td>";
+                //echo "<tr>";
+               echo '<td style="text-align:left" width="150" height="200"><a href="items.php?prodID='.mysql_result($result, $i, 'ProductID').'">
+			<img src='.mysql_result($result, $i, 'Image'). ' width="150px" height="150px""></br>'
+			. mysql_result($result, $i, 'ProductName') .'</a>';
+                echo '</br>$'. mysql_result($result, $i, 'UnitPrice') . '</td>';
+               // echo "<td><img src=\"",mysql_result($result, $i, 'Image'), "\" height=\"100\" style=\"max-width: 120px\"></td>";
                 //echo '<td>' . mysql_result($result, $i, 'ImageName') . '</td>';
                 //echo '<td><a href="edit.php?id=' . mysql_result($result, $i, 'id') . '">Edit</a></td>';
                 //echo '<td><a href="delete.php?id=' . mysql_result($result, $i, 'id') . '">Delete</a></td>';
-                echo "</tr>"; 
+                //echo "</tr>"; 
         }
         // close table>
-        echo "</table>"; 
+        echo "</tr></table>"; 
         
         // pagination
         

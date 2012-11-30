@@ -1,7 +1,8 @@
 <?php
-	include_once ("DBFuncsP.php");
-	include_once ("global.php");
 	session_start();
+	include_once ("DBFuncs.php");
+	include_once ("global.php");
+	include_once ("layout.php");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>

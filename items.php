@@ -1,6 +1,7 @@
 <?php
-require_once('DBFuncs.php');
-require_once('global.php');
+include_once('DBFuncs.php');
+include_once('global.php');
+include_once('layout.php');
 
 $id = $_GET['prodID'];
 $row = $db->getOneProduct($id);
@@ -47,14 +48,14 @@ else
 </SCRIPT>
 </head>
 <center>
-<table width="600">
-  <tr width = "300">
-    <td align='left'><font size=20><?php echo($row['ProductName']);?></font></td>
-	<td align='right'><font size=20>$<?php echo($row['UnitPrice']);?></font></td>
+<table style="width:70%">
+  <tr style="width:300px">
+    <td style="text-align:left"><font size=20><?php echo($row['ProductName']);?></font></td>
+	<td style="text-align:right"><font size=20>$<?php echo($row['UnitPrice']);?></font></td>
   </tr>
   <tr>
 	<td width="300" height="300"><img src='<?php echo($row['Image']);?>' width="100%"></td>
-	<td align='right'><?php echo($row['ProductDesc']);?></td>
+	<td style="text-align:right"><?php echo($row['ProductDesc']);?></td>
   </tr>
   <tr><td>
   <FORM ACTION="cart.php?action=add" METHOD=POST>

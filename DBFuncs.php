@@ -12,16 +12,13 @@ class DBFuncs
 		
 		$this->conn = $conn;
 	}
-	//function connect()
-	//{
-	//	$conn = mysql_connect("studentdb.gl.umbc.edu", "ply1", "ThereisnoP@ssw0rd")
-	//		or die ("Could not connect to database" . mysql_error());
-	//		
-	//	$rs = mysql_select_db("ply1", $conn) or die ("Could not select database");
-	//	
-	//	$this->conn = $conn;
-	//}
-	
+	function getUserName($userID)
+	{
+		$sql = "SELECT `FirstName` FROM `ply1`.`Customers` WHERE `CustomerID` = '".$userID."'";
+		$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+		$row = mysql_fetch_row($rs);
+		return $row['FirstName'];
+	}
 	function userSignup($email, $pw)
 	{
 		$sql = "SELECT * FROM `ply1`.`Customers` WHERE `E-mail` = '".$email."'";

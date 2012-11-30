@@ -1,5 +1,6 @@
-<?php include ("DBFuncs.php");
+<?php include_once ("DBFuncs.php");
 session_start();
+include_once ("layout.php");
 $dbConn = new DBFuncs();
 
 $email = $_POST["username"];
@@ -17,38 +18,7 @@ if(isValidEmail($email))
 	
 }
 
-?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    <title>ShopMaster</title>
-	  </head>
-<div id='heading'>
-<table>
-	<tr>
-	<td align='left' width='15%'>
-	</td>
-	<td align='center' width='70%'>
-		<img src='logo.png' align='center' width='100%'>
-	</td>
-	<td class='newHead' align='right' width='15%'>
-	    
-		<a href="./OwnerTools.php?page=login">Log in</a></br>
-          	<a href="./OwnerTools.php?page=create_account">Create an Account</a></li></br>
-	      	<a href="./OwnerTools.php?page=cart">Shopping Cart</a></br>
-	    
-	</td>
-	</tr>
-</table>
-</div>
-  <center>
-  </body>
-</html>
 
-
-<?php
 	if($valid)
 	{
 		echo("E-mail address already registered.");

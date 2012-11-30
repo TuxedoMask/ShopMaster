@@ -9,26 +9,29 @@ session_start();
 // Process actions
 $cart = $_SESSION['cart'];
 $action = $_GET['action'];
+$added = true;
 switch ($action) {
 	case 'add':
 		
 		$id = $_POST['id'];
 		$row = $db->getOneProduct($id);
 		$quantity = $_POST['quantity'];
-		if ($quantity <= $row['UnitsInStock'])
-		{
-			if ($cart) {
-				$cart .= ','.$id;
-			} else {
-				$cart = $id;
-			}
-			for($i = 1; $i < $quantity; $i++)
-				$cart .= ','.$id;
+		if($row['UnitsInStock'] < $quantity) {
+			$added = false;
+			$min = $row['UnitsInStock'];	
 		}
 		else
-		{
-			$added = false;
+		{	$added = true;
+			$min = $value;
 		}
+		if ($cart) {
+			$cart .= ','.$id;
+		} else {
+			$cart = $id;
+		}
+		for($i = 1; $i < $min; $i++)
+			$cart .= ','.$id;
+		
 		break;
 	case 'delete':
 		if ($cart) {
@@ -127,7 +130,7 @@ $_SESSION['cart'] = $cart;
 <div style="text-align:center;"> 
 <div id="contents">
 
-<h1>Please check quantities...</h1>
+<h1>Shopping Cart</h1>
 
 <?php
 if(!$added)
@@ -138,7 +141,7 @@ if(!$added)
 echo showCart();
 ?>
 
-<p><a href="index2.php">Continue Shopping</a></p>
+<p><a href="index2.php?page=home">Continue Shopping</a></p>
 </div>
 </div>
 
@@ -172,24 +175,25 @@ function showCart() {
 			$sql = 'SELECT * FROM Products WHERE ProductID = '.$id;
 			$result = $db->execute($sql);
 			if ( $row=mysql_fetch_array($result))
-			{extract($row);
-			$output[] = '<tr>';
-			$output[] = '<td><button type="submit" style="width:90%" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			$output[] = '<td>'.$ProductName.'</td>';
-			$output[] = '<td>$'.$UnitPrice.'</td>';
-			$output[] = '<td><input type="text" style="width:90%" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
-			$output[] = '<td>$'.($UnitPrice * $Quantity).'</td>';
-			$total += $UnitPrice * $Quantity;
-			$output[] = '</tr>';
+			{
+				extract($row);
+				$output[] = '<tr>';
+				$output[] = '<td><button type="submit" style="width:90%" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			
+				$output[] = '<td><a href="items.php?prodID='.$row['ProductID'].'">'.$ProductName.'</td>';
+				$output[] = '<td>$'.$UnitPrice.'</td>';
+				$output[] = '<td><input type="text" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
+				$output[] = '<td>$'.($UnitPrice * $Quantity).'</td>';
+				$total += $UnitPrice * $Quantity;
+				$output[] = '</tr>';
 			}
 		}
 		$output[] = '</table>';
 		$output[] = '<div style="width:85%;" align="right"><button type="submit">Update cart</button>' .
-				'Grand total: $'.$total.'</div>';
-		$output[] = '</table>';
+				'Grand total: $'.$total.' <p></div>';
 		
-		$output[] = '</form>';
+		$output[] = '</form></br><form action="./checkout.php" method="post"><button type="submit">Checkout</button>';
 	} else {
-		$output[] = '<p>You shopping cart is empty.</p>';
+		$output[] = '<p>Your shopping cart is empty.</p>';
 	}
 	return join('',$output);
 }
