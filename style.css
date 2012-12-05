@@ -3,12 +3,9 @@
 {
 	color:black;
 }
-a:link
+a:link, a:visited
 {
-	color:black;
-}
-a:visited
-{
+	text-decoration:none;
 	color:black;
 }
 a:hover

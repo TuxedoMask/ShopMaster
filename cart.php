@@ -22,7 +22,7 @@ switch ($action) {
 		}
 		else
 		{	$added = true;
-			$min = $value;
+			$min = $quantity;
 		}
 		if ($cart) {
 			$cart .= ','.$id;

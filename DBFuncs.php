@@ -76,7 +76,15 @@ class DBFuncs
 		{
 			$sql = "INSERT INTO `ply1`.`Order Details` (`OrderID`, `ProductID`, `UnitPrice`, `Quantity`)
 				VALUES ('".$orderID."','".$items[$i++]."','".$items[$i++]."','".$items[$i]."')";
-			$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);	
+			$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+			$prodID = $items[$i-2];
+			$quantity = $items[$i];
+			$sql = "SELECT `UnitsInStock` FROM `ply1`.`Products` WHERE `ProductID` = '".$prodID."'";
+			$rs = $this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
+			$row = mysql_fetch_array($rs);
+			$newUnits = $row[UnitsInStock] - $quantity;
+			$sql = "UPDATE `ply1`.`Products` SET `UnitsInStock` = '$newUnits' WHERE `ProductID` = '$prodID'";
+			$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 		}
 	
 	}

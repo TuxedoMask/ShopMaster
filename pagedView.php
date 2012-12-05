@@ -5,8 +5,7 @@
 	include_once ("layout.php");
 	
 ?>
-<html>
-<body>
+
 
 	<?php
 	global $db;
@@ -61,9 +60,8 @@
 for ($i = $start; $i < $end; $i++)
         {
 			if ($i == $total_results) {break;}
-			echo '<div class="product">';
-			echo '<a href="items.php?prodID='.mysql_result($result, $i, 'ProductID').'">
-			<img src='.mysql_result($result, $i, 'Image').'></br>'
+			echo '
+				<div class="product"><a href="items.php?prodID='.mysql_result($result, $i, 'ProductID').'"><img src='.mysql_result($result, $i, 'Image').'></br>'
 			. mysql_result($result, $i, 'ProductName') .'</a>';
 			echo '</br>$'. mysql_result($result, $i, 'UnitPrice') . '</div>';
         }
@@ -71,12 +69,12 @@ echo '</div>';
         
         
         // display pagination
-        echo "<center><p><a href='allView.php'>View All</a> | <b>View Page:</b> ";
+        echo "<center><a href='allView.php'>View All</a> | <b>View Page:</b> ";
         for ($i = 1; $i <= $total_pages; $i++)
         {
                 echo "<a href='index.php?page=$i'>$i</a> ";
         }
-        echo "</p></center>";
+        echo "</center>";
         
 ?>
 

@@ -2,7 +2,7 @@
 	<head>
 		<title>ShopMaster</title>
 		<link rel="stylesheet" href="style.css" />
-		
+		<script type="text/javascript" src="./funcs.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">

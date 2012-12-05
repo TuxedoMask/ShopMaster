@@ -1,17 +1,38 @@
+<form action="checkout.php?from=shipping&action=billing" method="POST" onsubmit="return validateShip(this);">
+Shipping Contact
+<table>
+  <tr>
+	<td align="right">Name:</td>
+	<td><input type="text" name="fname" placeholder="First Name"/>
+  </tr>
+  <tr>
+	<td></td>
+	<td><input type="text" name="lname" placeholder="Last Name"/></td>
+  </tr>
+  <tr>
+ 	<td align="right">Phone:</td> 
+	<td><input type="text" name="phone" placeholder="Phone Number"/></td>
+  </tr>
 
 
+<tr><td>Shipping Address</td></tr>
 
-<form action="checkout.php?from=shipping&action=billing" method="POST">
-Shipping Contact</br>
-Name:  <input type="text" name="fname" placeholder="First Name"/>
-	<input type="text" name="lname" placeholder="Last Name"/></br>
-Phone: <input type="text" name="phone" placeholder="Phone Number"/></br>
-E-mail Address: <input type="text" name="e-mail" placeholder="E-mail Address"/></br></br>
-
-Shipping Address</br>
-Address: <input type="text" name="address" placeholder="Street Address"/></br>
-City: <input type="text" name="city" placeholder="City"/>
-State: <input type="text" name="state" placeholder="State"/>
-Zip: <input type="text" name="zip" placeholder="Zip Code"/>
+  <tr>
+	<td align="right">Address:</td>
+	<td><input type="text" name="address" placeholder="Street Address"/></td>
+  </tr>
+  <tr>
+	<td align="right">City:</td>
+	<td><input type="text" name="city" placeholder="City"/></td>
+  </tr>
+  <tr>
+	<td align="right">State:</td>
+	<td><input type="text" name="state" placeholder="State"/></td>
+  </tr>
+  <tr>
+	<td align="right">Zip:</td>
+	<td><input type="text" name="zip" placeholder="Zip Code"/></td>
+  </tr>
+</table>
 <input type="submit" value="Submit">
 </form>

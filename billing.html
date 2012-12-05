@@ -1,15 +1,79 @@
 
-<form action="checkout.php?from=billing&action=complete" method="POST">
-Shipping Contact</br>
-Name:  <input type="text" name="fname" placeholder="First Name"/>
-	<input type="text" name="lname" placeholder="Last Name"/></br>
-Phone: <input type="text" name="phone" placeholder="Phone Number"/></br>
+<form action="checkout.php?from=billing&action=complete" method="POST" onsubmit="return validateBill(this);">
+Billing Information
+<table>
+  <tr>
+	<td align="right">Name:</td>
+	<td><input type="text" name="fname" placeholder="First Name"/>
+  </tr>
+  <tr>
+	<td></td>
+	<td><input type="text" name="lname" placeholder="Last Name"/></td>
+  </tr>
+  <tr>
+ 	<td align="right">Phone:</td> 
+	<td><input type="text" name="phone" placeholder="Phone Number"/></td>
+  </tr>
+  <tr>
+	<td align="right">Address:</td>
+	<td><input type="text" name="address" placeholder="Street Address"/></td>
+  </tr>
+  <tr>
+	<td align="right">City:</td>
+	<td><input type="text" name="city" placeholder="City"/></td>
+  </tr>
+  <tr>
+	<td align="right">State:</td>
+	<td><input type="text" name="state" placeholder="State"/></td>
+  </tr>
+  <tr>
+	<td align="right">Zip:</td>
+	<td><input type="text" name="zip" placeholder="Zip Code"/></td>
+  </tr>
+</table>
 
-Shipping Address</br>
-Address: <input type="text" name="address" placeholder="Street Address"/></br>
-Country: <input type="text" name="country" placeholder="Country"/>
-City: <input type="text" name="city" placeholder="City"/>
-State: <input type="text" name="state" placeholder="State"/>
-Zip: <input type="text" name="zip" placeholder="Zip Code"/>
+Credit Card Information
+<table>
+  <tr>
+	<td align="right">Card Number:</td>
+	<td><input type="text" name="card" placeholder="Card Number"/>
+  </tr>
+  <tr>
+	<td align="right">Name on Card:</td>
+	<td><input type="text" name="cardname" placeholder="Full Name"/>
+  </tr>
+  <tr>
+	<td align="right">Expiration date:</td>
+	<td><select name="month">
+  		<option value="01">01
+ 		<option value="02">02
+ 		<option value="03">03
+  		<option value="04">04
+ 		<option value="05">05
+  		<option value="06">06
+  		<option value="07">07
+  		<option value="08">08
+  		<option value="09">09
+  		<option value="10">10
+  		<option value="11">11
+ 		<option value="12">12
+	    </select>
+	    <select name="year">
+  		<option value="2012">2012
+  		<option value="2013">2013
+  		<option value="2014">2014
+  		<option value="2015">2015
+  		<option value="2016">2016
+  		<option value="2017">2017
+  		<option value="2018">2018
+  		<option value="2019">2019
+  		<option value="2020">2020
+  		<option value="2021">2021
+  		<option value="2022">2022
+  		<option value="2023">2023
+	    </select>
+	</td>
+  </tr>
+</table>
 <input type="submit" value="Submit">
 </form>

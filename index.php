@@ -20,6 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       {
          include("cart.php");
       }
+	elseif ($_GET['page'] == 'contact')
+      {
+         include("contact.html");
+      }
+	elseif ($_GET['page'] == 'policy')
+      {
+         include("policy.html");
+      }
+	elseif ($_GET['page'] == 'copyright')
+      {
+         include("copyright.html");
+      }
       else
       {
 	  include("featured.php");
