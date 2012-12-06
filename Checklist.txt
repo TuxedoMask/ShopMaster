@@ -2,8 +2,6 @@ Okay, these are the pages that we need, According to the SDD:
 
 Pages Needed:
 -------------
-Check out page (formatting/validation)
-
 Owners Tools Page
 Owners Editing Inventory Page	
 Owner Adding to Inventory Page	
@@ -20,7 +18,7 @@ Create an account Page
 Cart
 Product Page
 Thank you Page	
-
+Check out page (formatting/validation)
 
 
 
