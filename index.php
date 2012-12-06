@@ -51,5 +51,5 @@ else
 }
 
 
-include("footer.html");
+include_once("footer.html");
 ?>

@@ -1,24 +1,25 @@
-<?php include_once ("DBFuncs.php");
-session_start();
-include_once ("layout.php");
-$dbConn = new DBFuncs();
+<?php 
 
+session_start();
+include_once ("DBFuncs.php");
+$dbConn = new DBFuncs();
+$valid = false;
 $email = $_POST["username"];
 $password = $_POST["password"];
 if(isValidEmail($email))
 {
 	$valid = true;
-	$id = $dbConn->userSignup($username, $password);
+	$id = $dbConn->userSignup($email, $password);
 	if ($id > 0)
 	{
 		$_SESSION['userID'] = $id;
-		header ("Location: OwnerTools.php");
+		header ("Location: index.php");
 		exit;
 	}
 	
 }
 
-
+	include_once ("layout.php");
 	if($valid)
 	{
 		echo("E-mail address already registered.");

@@ -49,5 +49,5 @@ else
 		include("complete.php");
 	}
 }
-
+include_once ("footer.html");
 ?>

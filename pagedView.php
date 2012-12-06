@@ -72,9 +72,9 @@ echo '</div>';
         echo "<center><a href='allView.php'>View All</a> | <b>View Page:</b> ";
         for ($i = 1; $i <= $total_pages; $i++)
         {
-                echo "<a href='index.php?page=$i'>$i</a> ";
+                echo "<a href='pagedView.php?page=$i'>$i</a> ";
         }
         echo "</center>";
-        
+include_once("footer.html");        
 ?>
 
