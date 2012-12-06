@@ -80,7 +80,7 @@ function validateBill(form)
 		}
 	}
 	if(form.cardname.value.length == 0) {
-		errors.push('Please enter the name of the Credit Card holder);
+		errors.push('Please enter the name of the Credit Card holder');
 	}
 	//do other checks on other form fields
 	if(errors.length > 0) {

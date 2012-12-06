@@ -31,7 +31,7 @@ Shipping Contact
   </tr>
   <tr>
 	<td align="right">Zip:</td>
-	<td><input type="text" name="zip" placeholder="Zip Code"/></td>
+	<td><input type="text" name="zip" onkeypress="return isNumberKey(this);" maxlength=5 placeholder="Zip Code"/></td>
   </tr>
 </table>
 <input type="submit" value="Submit">

@@ -28,7 +28,7 @@ Billing Information
   </tr>
   <tr>
 	<td align="right">Zip:</td>
-	<td><input type="text" name="zip" placeholder="Zip Code"/></td>
+	<td><input type="text" name="zip" onkeypress="return isNumberKey(this);" maxlength=5 placeholder="Zip Code"/></td>
   </tr>
 </table>
 
@@ -36,7 +36,7 @@ Credit Card Information
 <table>
   <tr>
 	<td align="right">Card Number:</td>
-	<td><input type="text" name="card" placeholder="Card Number"/>
+	<td><input type="text" name="card" onkeypress="return isNumberKey(this);" placeholder="Card Number"/>
   </tr>
   <tr>
 	<td align="right">Name on Card:</td>
