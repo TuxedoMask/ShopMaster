@@ -2,21 +2,30 @@ Okay, these are the pages that we need, According to the SDD:
 
 Pages Needed:
 -------------
-Home Page
-
 Check out page (formatting/validation)
-	
+
 Owners Tools Page
 Owners Editing Inventory Page	
 Owner Adding to Inventory Page	
 Viewing all orders Page
 
+===========
 
 Pages Done:
 -----------
+Home Page
 Sign in Page	
 Item added to cart Page
 Create an account Page
 Cart
 Product Page
 Thank you Page	
+
+
+
+
+
+
+Notes to self [Patrick]
+Use ppt to make section headers for featured and all merchandise
+Stea... BORROW items and stuffs from Macrocenter, Oldegg, and WorstBuy to place on site as test items instead of generics
