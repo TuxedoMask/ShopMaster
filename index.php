@@ -35,12 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       else
       {
 	  include("featured.php");
+	  echo '<center><img src=\'allItems.png\'></center>';
 	  include("pagedView.php");
       }
    }
    else
    {
 	  include("featured.php");
+	  echo '<center><img src=\'allItems.png\'></center>';
 	  include("pagedView.php");
     }
 }

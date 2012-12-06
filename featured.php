@@ -54,26 +54,36 @@
   	// Print statement to check
     //echo "Items in table: ", $countOfFeaturedItems, "</br>";
     $maxFeaturedItemsIndex = $countOfFeaturedItems-1;
-    
-    //http://stackoverflow.com/questions/11239563/random-number-generation-without-duplicates
-    $array = array();
-    for($index = 0; $index < $countOfFeaturedItems && $index < $maxItems; $index++)
-   		{
-   		$randomNum = rand(0, $maxFeaturedItemsIndex);
-   		while(in_array($randomNum, $array))
-    		{
-    		$randomNum = rand(0, ($maxFeaturedItemsIndex));
-    		}
-    	$array[] = $randomNum;
-    	
-    	// Print to Check
-    	//echo "Got here ", $randomNum, "</br>";
-   		}
-   	
-   	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
-   	// Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
-   	mysql_data_seek($result, 0);
 
+    // Header image for featured items
+    echo '<center><img src=\'featured.png\'></center>';
+    
+    if ($countOfFeaturedItems == 0)
+    	{
+    	echo '<center>There are no featured items to display today. Check back later!</center><br>';
+    	}
+    else
+    {
+	    //http://stackoverflow.com/questions/11239563/random-number-generation-without-duplicates
+	    $array = array();
+	    for($index = 0; $index < $countOfFeaturedItems && $index < $maxItems; $index++)
+	   		{
+	   		$randomNum = rand(0, $maxFeaturedItemsIndex);
+	   		while(in_array($randomNum, $array))
+	    		{
+	    		$randomNum = rand(0, ($maxFeaturedItemsIndex));
+	    		}
+	    	$array[] = $randomNum;
+	    	
+	    	// Print to Check
+	    	//echo "Got here ", $randomNum, "</br>";
+	   		}
+	   	
+	   	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
+	   	// Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
+	   	mysql_data_seek($result, 0);
+	}
+	
    	echo '<div id="products">';
    	// OKay, we have our random items, lets display them
    	for ($index = 0; $index < count($array); $index++)

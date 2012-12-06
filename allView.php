@@ -28,6 +28,7 @@
 
         // loop through results of database query, displaying them in the table
         $total_results = mysql_num_rows($result);
+        echo '<br><br><br>';
         echo '<div id="products">';
         for ($i = 0; $i < $total_results; $i++)
         	{
@@ -37,6 +38,11 @@
 			echo '</br>$'. mysql_result($result, $i, 'UnitPrice') . '</div>';
         	}
         echo '</div>';
+        
+        if ($total_results == 0)
+        {
+        	echo '<center>There are no items for sale today. Check back later!</center><br>';
+        }
         	
 //             // echo out the contents of each row into a table [Old Style]
 //             echo "<tr>";

@@ -66,7 +66,10 @@ for ($i = $start; $i < $end; $i++)
 			echo '</br>$'. mysql_result($result, $i, 'UnitPrice') . '</div>';
         }
 echo '</div>';	
-        
+		if ($total_results == 0)
+		{
+			echo '<center>There are no items for sale today. Check back later!</center><br>';
+		}
         
         // display pagination
         echo "<center><a href='allView.php'>View All</a> | <b>View Page:</b> ";
