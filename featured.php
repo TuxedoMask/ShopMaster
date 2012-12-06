@@ -43,7 +43,7 @@
     
     // initialize counters
     $countOfFeaturedItems = 0;
-    $maxItems = 6;
+    $maxItems = 8;
     
     // Find out how many items are in the table
   	while ($row = mysql_fetch_assoc($result))
@@ -73,18 +73,30 @@
    	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
    	// Thanks to: http://forums.phpfreaks.com/topic/189495-mysql-fetch-assocresult-reset-pointer-mysql-data-seek-causes-page-to-fail/
    	mysql_data_seek($result, 0);
-   		
+
+   	echo '<div id="products">';
    	// OKay, we have our random items, lets display them
    	for ($index = 0; $index < count($array); $index++)
    		{
    		mysql_data_seek($result, $array[$index]);
    		$row = mysql_fetch_array($result);
-    	echo '<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a></br>';
+   		//<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a>
+   		
+   		
+    	//echo 'Featured Item!</br>'; //Leave this in for a staggered look.
+    	
+    	echo '<div class="product"><a href="items.php?prodID='.mysql_result($result, $array[$index], 'ProductID').'"><img src='.mysql_result($result, $array[$index], 'Image').'></br>'
+    			. mysql_result($result, $array[$index], 'ProductName') .'</a>';
+    	echo '</br>$'. mysql_result($result, $array[$index], 'UnitPrice') . '</div>';
+    	
 //     	echo $row['ProductDesc'], "<br>";
 //     	echo "<img src=", $row['Image'], "></br>";
 //     	echo "Price: $", $row['UnitPrice'], "</br>";
    		}
-    
+   		echo '</div></br></br>';
+   		
+   		
+   		
     /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
      * Brian:  oh, when you need to link to the product page
      * 1 sec

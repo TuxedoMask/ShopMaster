@@ -37,8 +37,8 @@
 			echo '</br>$'. mysql_result($result, $i, 'UnitPrice') . '</div>';
         	}
         echo '</div>';
-        		
-//             // echo out the contents of each row into a table
+        	
+//             // echo out the contents of each row into a table [Old Style]
 //             echo "<tr>";
 //             $row = mysql_fetch_array($result);
 //             echo '<td><a href="items.php?prodID='.$row['ProductID'].'">'. mysql_result($result, $i, 'ProductName') .'</a></td>';
