@@ -1,3 +1,7 @@
+//Funcs.js
+
+//Function used to validate that appropriate values were entered into the
+//shipping information form
 function validateShip(form)
  {
 	errors = new Array();
@@ -36,7 +40,8 @@ function validateShip(form)
 	}
 	return true;
 }
-
+//Function used to validate that appropriate values were entered into the
+//billing information form
 function validateBill(form)
 {
 	errors = new Array();
@@ -90,7 +95,7 @@ function validateBill(form)
 	return true;
 
 }
-
+//Function used to only allow numeric keys to be entered into a textbox
 function isNumberKey(evt)
 {
 	var charCode = (evt.which) ? evt.which : event.keyCode

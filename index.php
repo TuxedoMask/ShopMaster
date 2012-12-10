@@ -1,13 +1,20 @@
 <?php 
+/*
+*	index.php
+*	Main webpage for ShopMaster
+*
+*/
 	session_start();
 	include_once ("DBFuncs.php");
 	include_once ("global.php");
 	include_once ("layout.php");
-	
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
    if ($_GET['page'])
    {
+	//Display appropriate content depending on which page is specified
       if ($_GET['page'] == 'login')
       {
          include("login.html");
@@ -35,21 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       else
       {
 	  include("featured.php");
-	  echo '<center><img src=\'allItems.png\'></center>';
+	  echo '<div id="banner">All Items</div>';
 	  include("pagedView.php");
       }
    }
    else
    {
 	  include("featured.php");
-	  echo '<center><img src=\'allItems.png\'></center>';
+	  echo '<div id="banner">All Items</div>';
 	  include("pagedView.php");
     }
 }
 else
    {
 	include("featured.php");
-	  include("pagedView.php");
+	include("pagedView.php");
 }
 
 

@@ -1,4 +1,8 @@
 <?php
+/*
+*	items.php
+*	Page to display product information
+*/
 include_once('DBFuncs.php');
 include_once('global.php');
 include_once('layout.php');
@@ -19,6 +23,7 @@ $row = $db->getOneProduct($id);
   			<div style="vertical-align:text-bottom; font-size:18pt;">
  				 <FORM ACTION="cart.php?action=add" METHOD=POST>
  				 Quantity 
+				 <!--Only allow numeric keys to be entered into textbox-->
  				 <INPUT NAME="quantity" SIZE=3 MAXLENGTH=3 onkeypress="return isNumberKey(this);">
 				$<?php echo($row['UnitPrice']);?>
   				<INPUT TYPE=SUBMIT VALUE="Add to Cart">

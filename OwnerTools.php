@@ -1,109 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    <title>ShopMaster</title>
-	  </head>
-<div id='heading'>
-<table>
-	<tr>
-	<td align='left' width='15%'>
-	</td>
-	<td align='center' width='70%'>
-		<img src='logo.png' align='center' width='100%'>
-	</td>
-	<td class='newHead' align='right' width='15%'>
-	    
-		<a href="./OwnerTools.php?page=login">Log in</a></br>
-          	<a href="./OwnerTools.php?page=create_account">Create an Account</a></li></br>
-	      	<a href="./OwnerTools.php?page=cart">Shopping Cart</a></br>
-	    
-	</td>
-	</tr>
-</table>
-</div>
-   <h1> Owner's Tools </h1>
-
-  </body>
-</html>
-
-<?php
-#session_start();
+<?php 
+	session_start();
+	include_once ("DBFuncs.php");
+	include_once ("global.php");
+	include_once ("layout.php");
+	global $db;
 // Get dbConn functions
-
-//Read the following link to learn about testing this:
-//http://userpages.umbc.edu/~jack/wwwtalk/html-notes.html
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-   
+   $getarray = explode("?", $_GET['page']);
+   $_GET['page'] = $getarray[0];
+   $param = $getarray[1];
+  
    if ($_GET['page'])
    {
-      if ($_GET['page'] == 'login')
+     if ($_GET['page'] == 'addItem')
       {
-         include("login.html");
-      }
-      elseif ($_GET['page'] == 'create_account')
-      {
-         include("createAccount.html");
-      }
-      elseif ($_GET['page'] == 'cart')
-      {
-         print "<p>Call to cart should go here</p><br>";
-      }
-      elseif ($_GET['page'] == 'addItem')
-      {
-         print "<p>Call to addItem should go here</p><br>";
-         print '<br><a href="./OwnerTools.php?page=ownerTools">Return to Owner Tools Menu</a><br>';
+         print "<p>Add an Item</p><br>";
+
+         addItemGUI();
+
+         print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
       }
       elseif ($_GET['page'] == 'removeItem')
       {
-         print "<p>Call to removeItem should go here</p><br>";
-         print '<br><a href="./OwnerTools.php?page=ownerTools">Return to Owner Tools Menu</a><br>';
+         print "<p>Select an Item to Remove</p><br>";
+
+         listAllItems('remove');
+
+         print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
+
       }
       elseif ($_GET['page'] == 'editItem')
       {
-         print "<p>Call to editItem should go here</p><br>";
-         print '<br><a href="./OwnerTools.php?page=ownerTools">Return to Owner Tools Menu</a><br>';
+         print "<p>Select an Item to Edit</p><br>";
+
+         listAllItems('edit');
+
+         print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
+
       }
       elseif ($_GET['page'] == 'listOrders')
       {
-         print "<p>Call to listOrders should go here</p><br>";
-         print '<br><a href="./OwnerTools.php?page=ownerTools">Return to Owner Tools Menu</a><br>';
+         print "<p>Orders Received:</p><br>";
+
+         listOrders();
+
+         print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
+
       }
       elseif ($_GET['page'] == 'ownerTools')
       {
          //To link to the main owner tools page, go to OwnerTools.php?page=ownerTools
-         print '<a href="./OwnerTools.php?page=addItem">Add an Item</a><br>';
-         print '<a href="./OwnerTools.php?page=removeItem">Remove an Item</a><br>';
-         print '<a href="./OwnerTools.php?page=editItem">Edit an Item</a><br>';
-         print '<a href="./OwnerTools.php?page=listOrders">List Orders</a><br>';
+         print '<a href="./OwnerTools.php?page=addItem"><button>Add an Item</button></a><br>';
+         print '<a href="./OwnerTools.php?page=removeItem"><button>Remove an Item</button></a><br>';
+         print '<a href="./OwnerTools.php?page=editItem"><button>Edit an Item</button></a><br>';
+         print '<a href="./OwnerTools.php?page=listOrders"><button>List Orders</button></a><br>';
+      }
+      elseif ($_GET['page'] == 'edit')
+      {
+         $pname = substr($param, 5);
+         editItem($pname);
+      }
+      elseif ($_GET['page'] == 'remove')
+      {
+         $pname = substr($param, 5);
+         removeItem($pname);
       }
 
    }
 }
-
-
-
-function addItem($item)
+include_once('footer.html');
+//The GUI for adding an item
+function addItemGUI()
 {
+   //Name, desc., price, units, image, featured
+   $name = 'Product Name: <input type="text" maxlength="40" name="name" style="width: 405px;" value="Product Name">';
+   $desc = '<textarea name="desc" cols="60" rows="20">Describe your product.</textarea>';   
+   $price = 'Price: <input type="text" name="price" value="0.00">';
+   $units = 'Units: <input type="text" name="units" value="1" onkeypress="return isNumberKey(this);">';
+   $image = 'Image URL: <input type="text" name="imageURL" style="width: 425px;" value="./images/noimage.png">';
+   $featured = 'Featured?: <input type="text" maxlength="1" maxvalue="1" name="featured" value="0">'; 
+
+   $formbegin = '<form action="AddItem.php" method="post">';
+   $formend = '</form>';
+   $submitbtn = '<button>Add This Item to Inventory</button>';
+
+   print $formbegin;
+   print $name . '<br>';
+   print 'Description:' . '<br>' . $desc . '<br>';
+   print $price . '<br>';
+   print $units . '<br>';
+   print $image . '<br>';
+   print $featured . '<br>';
+
+   print $submitbtn . $formend . '<br>';
 
 }
 
-function removeItem($item)
+//Lists all items in the form of clickable links
+//$action is either 'remove' or 'edit'
+function listAllItems($action)
 {
+   global $db;
+   $items = $db->getAllProducts();
+   while($item = mysql_fetch_array($items))
+   {
+  
+      $ilink = '<a href="./OwnerTools.php?page=' . $action . '?item=' . $item['ProductID'] . '">' .
+               '<button>' .  $item['ProductName'] . '</button>' . '</a><br>';
+      print $ilink;
+   }
+
+   print '<br><br>';
 
 }
 
-function editItem($item)
-{
 
+//Remove an item message
+function removeItem($prodID)
+{
+   print 'Product has been removed from the inventory.<br>';
+   removeFromDatabase($prodID);
+   print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
 }
 
+//Removes item from database. Need help with this one
+function removeFromDatabase($prodID)
+{
+  global $db;
+  $db->deleteProduct($prodID);
+}
+
+//Get item from database based on its productID, then bring up the Edit Item GUI
+function editItem($prodID)
+{
+  global $db;
+  $item = $db->getOneProduct($prodID);
+  editItemGUI($item);
+  print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
+}
+
+
+//GUI for editing an item
+function editItemGUI($item)
+{
+   $name = 'Product Name: <input type="text" maxlength="40" name="name" style="width: 405px;" value="' . $item['ProductName'] . '">';
+   $desc = '<textarea name="desc" cols="60" rows="20">' . $item['ProductDesc']. '</textarea>';   
+   $price = 'Price: <input type="text" name="price" value="' . $item['UnitPrice'] . '">';
+   $units = 'Units: <input type="text" name="units" onkeypress="return isNumberKey(this);" value="' . $item['UnitsInStock'] . '">';
+   $image = 'Image URL: <input type="text" name="imageURL" style="width: 425px;" value="' . $item['Image'] . '">';
+   $featured = 'Featured?: <input type="text" maxlength="1" maxvalue="1" name="featured" value="' . $item['Featured'] . '">'; 
+
+   $formbegin = '<form action="EditItem.php" method="post">';
+   $formend = '</form>';
+   $submitbtn = '<button>Submit Changes</button>';
+
+   print $formbegin;
+   print $name . '<br>';
+   print 'Description:' . '<br>' . $desc . '<br>';
+   print $price . '<br>';
+   print $units . '<br>';
+   print $image . '<br>';
+   print $featured . '<br>';
+   print '<input type="hidden" value="'.$item['ProductID'].'" name="prodID">';
+   print $submitbtn . $formend . '<br>';
+}
+
+//Lists all orders
 function listOrders()
 {
+   global $db;
+   $orders = $db->getOrders();
+   while($order = mysql_fetch_array($orders))
+   {
+      printOrder($order);
+   }
+   print '<br><br>';
+}
 
+//This needs to change once orders can be received.
+//Display order ID, customer ID, and date
+//Order ID be a clickable link that takes admin to a page that contains the order details.
+function printOrder($order)
+{
+   print (string)$order . '<br>';
 }
 
 ?>

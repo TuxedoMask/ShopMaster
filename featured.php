@@ -3,17 +3,7 @@
   include_once ("DBFuncs.php");
   include_once ("global.php");
 
-?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
-<html>
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=MS932">
-	<title>ShopMaster - Featured Item Section</title>
-</head>
-
-<body>
-    <?php //<!-- Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
+//<!-- Copied and Modified Code from: http://php.net/manual/en/function.mysql-query.php
     
     // I assume that I will get a connection if I do this. [Thanks Brian for fixing it.]
     global $db;
@@ -56,7 +46,7 @@
     $maxFeaturedItemsIndex = $countOfFeaturedItems-1;
 
     // Header image for featured items
-    echo '<center><img src=\'featured.png\'></center>';
+    echo '<div id="banner">Featured Items</div>';
     
     if ($countOfFeaturedItems == 0)
     	{
@@ -75,8 +65,7 @@
 	    		}
 	    	$array[] = $randomNum;
 	    	
-	    	// Print to Check
-	    	//echo "Got here ", $randomNum, "</br>";
+	    	
 	   		}
 	   	
 	   	// Rest my pointer to the first element, else it will always be "false" because it is point to the last + 1 element which does not exist.
@@ -93,61 +82,15 @@
    		//<a href="items.php?prodID='.$row['ProductID'].'"><font color="0000FF">'. $row['ProductName'] .'</a>
    		
    		
-    	//echo 'Featured Item!</br>'; //Leave this in for a staggered look.
     	
     	echo '<div class="product"><a href="items.php?prodID='.mysql_result($result, $array[$index], 'ProductID').'"><img src='.mysql_result($result, $array[$index], 'Image').'></br>'
     			. mysql_result($result, $array[$index], 'ProductName') .'</a>';
     	echo '</br>$'. mysql_result($result, $array[$index], 'UnitPrice') . '</div>';
-    	
-//     	echo $row['ProductDesc'], "<br>";
-//     	echo "<img src=", $row['Image'], "></br>";
-//     	echo "Price: $", $row['UnitPrice'], "</br>";
-   		}
+    
+   	}
    		echo '</div></br></br>';
    		
    		
    		
-    /* <a href="./items.php?prodID="<?php echo($prodID);?>"> 
-     * Brian:  oh, when you need to link to the product page
-     * 1 sec
-     * Sent at 11:38 PM on Wednesday
-     * Brian:  <a href="./items.php?prodID="<?php echo($prodID);?>">
-     * or however you stored the product id
-     * */
-    
 
-
-    	/*
-    	 * This is where I am going to need to use some HTML to format things.
-    	 * I want to have:
-    	 * - a layout of six items in the center
-    	 * - cannot all be the same,
-    	 * - cannot be random items
-    	 * 	- can be random featured items if there are more than 6
-    	 * - can be in random order hence the above statement
-    	 * 
-    	 * That said, here is some idea code:
-<!-- Here is the SALES section -->
-<!-- Here is the images for those items: need about six or so. -->
-<frameset rows="16%,16%,16%,%4,16%,16%,16%" >
-	<frame src="itemA.html" scrolling="no" noresize frameborder="0">
-	<frame src="itemB.html" scrolling="no" noresize frameborder="0">
-	<frame src="itemC.html" scrolling="no" noresize frameborder="0">
-		<frame src="" scrolling="no" noresize frameborder="0"> <!-- This should be blank as the center piece -->
-	<frame src="itemD.html" scrolling="no" noresize frameborder="0">
-	<frame src="itemE.html" scrolling="no" noresize frameborder="0">
-	<frame src="itemF.html" scrolling="no" noresize frameborder="0">
-<!-- Bottom stuffs use frames for lower portion. -->
-</frameset>
-    	 */
-    
-    // Free the resources associated with the result set
-    // This is done automatically at the end of the script
-    mysql_free_result($result);
-    
-    // End of Copied and Modifed Code from: http://php.net/manual/en/function.mysql-query.php
-	?>
-</body>
-
-</html>
 

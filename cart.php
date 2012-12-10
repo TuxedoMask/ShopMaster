@@ -1,4 +1,9 @@
 <?php
+/*
+*	cart.php
+*	Processes cart actions, base code borrowed from http://v3.thewatchmakerproject.com/journal/276/
+*	Modified to fit product needs
+*/
 // Start the session
 session_start();
 // Includes
@@ -16,28 +21,66 @@ switch ($action) {
 		$id = $_POST['id'];
 		$row = $db->getOneProduct($id);
 		$quantity = $_POST['quantity'];
-		if($row['UnitsInStock'] < $quantity) {
-			$added = false;
-			$min = $row['UnitsInStock'];	
-		}
-		else
-		{	$added = true;
-			$min = $quantity;
-		}
-		if ($cart) {
-			$cart .= ','.$id;
-		} else {
-			$cart = $id;
-		}
-		for($i = 1; $i < $min; $i++)
-			$cart .= ','.$id;
+		//Check to make sure quantity is an int
+		if(is_numeric($quantity))
+		{
+			$quantity = intval($quantity);
+			if($quantity >= 0)
+			{	
+				$num = $quantity;
+				//Get number of items with this product ID currently in cart
+				if($cart)
+				{
+					$items = explode(',', $cart);
+					$count = array_count_values($items);
+					$num = $count[$id] + $quantity;
+				}
+				
+				//Only add max number of units in stock
+				if($row['UnitsInStock'] < $num) {
+					$added = false;
+					if($count)
+					{
+						$min = $row['UnitsInStock']-$count[$id];
+					}
+					else
+					{
+						$min = $row['UnitsInStock'];
+					}	
+				}
+				else
+				{	$added = true;
+					$min = $quantity;
+					//Check to see if cart exists and create if needed
+					if ($cart) {
+						$cart .= ','.$id;
+					} else {
+						$cart = $id;
+					}
+				}
+				if (!$cart && $row['UnitsInStock'] > 0) {
+					$cart = $id;
+				}
+				//add number of items desired to cart 
+				for($i = 1; $i < $min; $i++)
+					$cart .= ','.$id;
 		
-		break;
+				
+			}
+		}
+		//Non-numeric value entered into quantity field
+		else
+		{
+			echo('<div style="color:red; text-align:center;">Invalid Quantity entered, item not added to cart</div>');
+		}
+		break;	
 	case 'delete':
 		if ($cart) {
+			//convert cart string into an array
 			$items = explode(',',$cart);
 			$newcart = '';
 			foreach ($items as $item) {
+				//Compare against product id of item being deleted
 				if ($_GET['id'] != $item) {
 					if ($newcart != '') {
 						$newcart .= ','.$item;
@@ -52,43 +95,62 @@ switch ($action) {
 	case 'update':
 	if ($cart) {
 		$newcart = '';
+		$badValue = false;
+		//Each post is for a separate item in cart
 		foreach ($_POST as $key=>$value) {
-			if (stristr($key,'Quantity')) {
-				$id = str_replace('Quantity','',$key);
-				$items = ($newcart != '') ? explode(',',$newcart) : explode(',',$cart);
-				$newcart = '';
-				foreach ($items as $item) {
-					if ($id != $item) {
-						if ($newcart != '') {
-							$newcart .= ','.$item;
-						} else {
-							$newcart = $item;
+			//Check to make sure value is an integer
+			if(is_numeric($value))
+			{
+				$value = intval($value);
+				if (stristr($key,'Quantity')) {
+					$id = str_replace('Quantity','',$key);
+					$items = ($newcart != '') ? explode(',',$newcart) : explode(',',$cart);
+					$newcart = '';
+					//Step through entire cart
+					foreach ($items as $item) {
+						//Only add current product ID to cart
+						if ($id != $item) {
+							if ($newcart != '') {
+								$newcart .= ','.$item;
+							} else {
+								$newcart = $item;
+							}
 						}
 					}
-				}
-				$row = $db->getOneProduct($id);
-				if($row['UnitsInStock'] < $value) {
-					$added = false;
-					$min = $row['UnitsInStock'];	
-				}
-				else
-				{	$added = true;
-					$min = $value;
-				}
-				for ($i=1;$i<=$min;$i++) {
-					if ($newcart != '') {
-						$newcart .= ','.$id;
-					} else {
-						$newcart = $id;
+					$row = $db->getOneProduct($id);
+					//Only allow number of units in stock to be added to cart
+					if($row['UnitsInStock'] < $value) {
+						$added = false;
+						$min = $row['UnitsInStock'];	
 					}
-				}
+					else
+					{	$added = true;
+						$min = $value;
+					}
+					for ($i=1;$i<=$min;$i++) {
+						if ($newcart != '') {
+							$newcart .= ','.$id;
+						} 
+						else {
+							$newcart = $id;
+						}
+					}
 				
+				}
+			}
+			else
+			{
+				$badValue = true;
 			}
 		}
+		//Error message if non-numeric value entered into one of the quantity fields
+		if ($badValue)
+			echo('<div style="color:red; text-align:center;">Invalid Quantity entered</div>');
 	}
 	$cart = $newcart;
 	break;
 }
+//Store updated cart into session variable
 $_SESSION['cart'] = $cart;
 ?>
 
@@ -108,23 +170,9 @@ echo showCart();
 
 echo'<p><a href="index.php?page=home">Continue Shopping</a></p></div>';
 include_once('footer.html');
-?>
 
-</body>
-</html>
-<?php
-function writeShoppingCart() {
-	$cart = $_SESSION['cart'];
-	if (!$cart) {
-		return '<p>You have no items in your shopping cart</p>';
-	} else {
-		// Parse the cart session variable
-		$items = explode(',',$cart);
-		$s = (count($items) > 1) ? 's':'';
-		return '<p>You have <a href="cart.php">'.count($items).' item'.$s.' in your shopping cart</a></p>';
-	}
-}
-
+//Function used to display cart contents to the user
+//Shows Product name, unit price, quantity in cart, and total price
 function showCart() {
 	global $db;
 	$cart = $_SESSION['cart'];
@@ -137,6 +185,7 @@ function showCart() {
 		$output[] = '<form action="cart.php?action=update" method="post" id="cart">';
 		$output[] = '<table class="center">';
 		foreach ($contents as $id=>$Quantity) {
+			
 			$sql = 'SELECT * FROM Products WHERE ProductID = '.$id;
 			$result = $db->execute($sql);
 			if ( $row=mysql_fetch_array($result))
@@ -146,7 +195,7 @@ function showCart() {
 				$output[] = '<td><button type="submit" formaction="cart.php?action=delete&id='.$id.'" class="r">Remove</button></td>';			
 				$output[] = '<td><a href="items.php?prodID='.$row['ProductID'].'">'.$ProductName.'</td>';
 				$output[] = '<td>$'.$UnitPrice.'</td>';
-				$output[] = '<td><input type="text" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" /></td>';
+				$output[] = '<td><input type="text" name="Quantity'.$id.'" value="'.$Quantity.'" size="3" maxlength="3" onkeypress="return isNumberKey(this);"/></td>';
 				$output[] = '<td>$'.($UnitPrice * $Quantity).'</td>';
 				$total += $UnitPrice * $Quantity;
 				$output[] = '</tr>';

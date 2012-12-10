@@ -7,17 +7,21 @@
 	<body>
 		<div id="wrapper">
 	<div id="header">
-				<a href="./index.php"><img src='logo.png' width="80%"></a>
+				<a href="./index.php"><img src='./images/logo.png' width="80%"></a>
 
 				<ul>
-<?php if(!isset($_SESSION['userID'])) { ?> 
+<?php 
+//Only display register and login links if user is not logged in
+if(!isset($_SESSION['userID'])) 
+{ 
+	?> 
 					<li><a href="./index.php?page=create_account">Register</a></li>
 					<li><a href="./index.php?page=login">Login</a></li>
 
 <?php }
-      else {
+else {
 					echo '<li><a href="logout.php">Logout</a></li>';
-	}				
+}				
 
 ?>					<li><a href="./cart.php">Cart</a></li>
 				</ul>

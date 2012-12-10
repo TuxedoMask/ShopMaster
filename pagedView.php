@@ -3,18 +3,14 @@
 	include_once ("DBFuncs.php");
 	include_once ("global.php");
 	include_once ("layout.php");
-	
-?>
 
-
-	<?php
 	global $db;
 	/* 
         VIEW-PAGINATED.PHP
         Displays all data from 'players' table
         This is a modified version of view.php that includes pagination
         
-        THis code is from:
+        Code borrowed and modified from:
         http://www.killersites.com/community/index.php?/topic/1969-basic-php-system-vieweditdeleteadd-records/
 	*/
         
