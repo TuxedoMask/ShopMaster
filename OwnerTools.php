@@ -205,7 +205,7 @@ function displayOrder($orderID)
 	
 	while ($order = mysql_fetch_array($orders) && ($found == false))
 	{
-		if ($order['OrderID'] == strval($orderID))
+		if (strval($order['OrderID']) == strval($orderID))
 		{
 			$found = true;
 		}
