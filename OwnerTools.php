@@ -202,6 +202,9 @@ function displayOrder($orderID)
 	$found = false;
 	global $db;
 	$orders = $db->getOrders();
+	
+	print 'OrderID = ' . $orderID . '<br>';
+	
 	while ($order = mysql_fetch_array($orders) && ($found == false))
 	{
 		if ($order['OrderID'] == $orderID)
