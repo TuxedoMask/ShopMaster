@@ -70,8 +70,8 @@ a:hover {
 }
 
 #wrapper #products .product img {
-	width: 187px;
-	height: 187px;
+	max-width: 187px;
+	max-height: 187px;
 	border: 0px;
 }
 
@@ -114,7 +114,7 @@ a:hover {
 	padding-left: 10;
 	text-align: left;
 	max-width: 400px;
-	max-height: 400px;
+	max-height: 350px;
 	border: 0px;
 }
 

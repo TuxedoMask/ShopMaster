@@ -77,7 +77,7 @@ function addItemGUI()
 {
 	//Name, desc., price, units, image, featured
 	$name = 'Product Name: <input type="text" maxlength="40" name="name" style="width: 405px;" value="Product Name">';
-	$desc = '<textarea name="desc" cols="60" rows="20">Describe your product.</textarea>';
+	$desc = '<textarea name="desc" cols="60" maxlength="600" rows="20">Describe your product.</textarea>';
 	$price = 'Price: <input type="text" name="price" value="0.00">';
 	$units = 'Units: <input type="text" name="units" value="1" onkeypress="return isNumberKey(this);">';
 	$image = 'Image URL: <input type="text" name="imageURL" style="width: 425px;" value="./images/noimage.png">';
@@ -147,7 +147,7 @@ function editItem($prodID)
 function editItemGUI($item)
 {
 	$name = 'Product Name: <input type="text" maxlength="40" name="name" style="width: 405px;" value="' . $item['ProductName'] . '">';
-	$desc = '<textarea name="desc" cols="60" rows="20">' . $item['ProductDesc']. '</textarea>';
+	$desc = '<textarea name="desc" cols="60" maxlength="600" rows="20">' . $item['ProductDesc']. '</textarea>';
 	$price = 'Price: <input type="text" name="price" value="' . $item['UnitPrice'] . '">';
 	$units = 'Units: <input type="text" name="units" onkeypress="return isNumberKey(this);" value="' . $item['UnitsInStock'] . '">';
 	$image = 'Image URL: <input type="text" name="imageURL" style="width: 425px;" value="' . $item['Image'] . '">';
