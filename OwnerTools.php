@@ -203,9 +203,9 @@ function displayOrder($orderID)
 	global $db;
 	$orders = $db->getOrders();
 	
-	while ($order = mysql_fetch_array($orders) && ($found == false))
+	while (($order = mysql_fetch_array($orders)) && ($found == false))
 	{
-		if (strval($order['OrderID']) == strval($orderID))
+		if ($order['OrderID'] == intval($orderID))
 		{
 			$found = true;
 		}
@@ -213,18 +213,29 @@ function displayOrder($orderID)
 	
 	if ($found == true)
 	{
+	   $customerID = $order['CustomerID'];
+	   $orderDate = $order['OrderDate'];
+	   $shipName = $order['ShipName'];
+	   $shipEmail = $order['ShipEmail'];
+	   $shipPhone = $order['ShipPhone'];
+	   $shipAddress = $order['ShipAddress'];
+	   $shipCity = $order['ShipCity'];
+	   $shipState = $order['ShipState'];
+	   $shipCountry = $order['ShipCountry'];
+	   $shipPostalCode = $order['ShipPostalCode'];
+	   
 	   //Order Number CustomerID OrderDate ShipName ShipEmail ShipPhone ShipAddress ShipCity ShipState ShipCountry ShipPostalCode
 	   print 'Order Number ' . $orderID . ':<br>';
-	   print 'Customer ID: ' . strval($order['CustomerID']) . '<br>';
-	   print 'Order Date: ' . strval($order['OrderDate']) . '<br>';
-	   print 'Ship Name: ' . strval($order['ShipName']) . '<br>';
-	   print 'Ship Email: ' . strval($order['ShipEmail']) . '<br>';
-	   print 'Ship Phone: ' . strval($order['ShipPhone']) . '<br>';
-	   print 'Ship Address: ' . strval($order['ShipAddress']) . '<br>';
-	   print 'Ship City: ' . strval($order['ShipCity']) . '<br>';
-	   print 'Ship State: ' . strval($order['ShipState']) . '<br>';
-	   print 'Ship Country: ' . strval($order['ShipCountry']) . '<br>';
-	   print 'Ship Postal Code: ' . strval($order['ShipPostalCode']) . '<br>';
+	   print 'Customer ID: ' . $customerID . '<br>';
+	   print 'Order Date: ' . $orderDate . '<br>';
+	   print 'Ship Name: ' . $shipName . '<br>';
+	   print 'Ship Email: ' . $shipEmail . '<br>';
+	   print 'Ship Phone: ' . $shipPhone . '<br>';
+	   print 'Ship Address: ' . $shipAddress . '<br>';
+	   print 'Ship City: ' . $shipCity . '<br>';
+	   print 'Ship State: ' . $shipState . '<br>';
+	   print 'Ship Country: ' . $shipCountry . '<br>';
+	   print 'Ship Postal Code: ' . $shipPostalCode . '<br>';
 	}
 	else
 	{
