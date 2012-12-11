@@ -203,11 +203,9 @@ function displayOrder($orderID)
 	global $db;
 	$orders = $db->getOrders();
 	
-	print 'OrderID = ' . $orderID . '<br>';
-	
 	while ($order = mysql_fetch_array($orders) && ($found == false))
 	{
-		if ($order['OrderID'] == $orderID)
+		if ($order['OrderID'] == strval($orderID))
 		{
 			$found = true;
 		}
@@ -217,16 +215,16 @@ function displayOrder($orderID)
 	{
 	   //Order Number CustomerID OrderDate ShipName ShipEmail ShipPhone ShipAddress ShipCity ShipState ShipCountry ShipPostalCode
 	   print 'Order Number ' . $orderID . ':<br>';
-	   print 'Customer ID: ' . $order['CustomerID'] . '<br>';
-	   print 'Order Date: ' . $order['OrderDate'] . '<br>';
-	   print 'Ship Name: ' . $order['ShipName'] . '<br>';
-	   print 'Ship Email: ' . $order['ShipEmail'] . '<br>';
-	   print 'Ship Phone: ' . $order['ShipPhone'] . '<br>';
-	   print 'Ship Address: ' . $order['ShipAddress'] . '<br>';
-	   print 'Ship City: ' . $order['ShipCity'] . '<br>';
-	   print 'Ship State: ' . $order['ShipState'] . '<br>';
-	   print 'Ship Country: ' . $order['ShipCountry'] . '<br>';
-	   print 'Ship Postal Code: ' . $order['ShipPostalCode'] . '<br>';
+	   print 'Customer ID: ' . strval($order['CustomerID']) . '<br>';
+	   print 'Order Date: ' . strval($order['OrderDate']) . '<br>';
+	   print 'Ship Name: ' . strval($order['ShipName']) . '<br>';
+	   print 'Ship Email: ' . strval($order['ShipEmail']) . '<br>';
+	   print 'Ship Phone: ' . strval($order['ShipPhone']) . '<br>';
+	   print 'Ship Address: ' . strval($order['ShipAddress']) . '<br>';
+	   print 'Ship City: ' . strval($order['ShipCity']) . '<br>';
+	   print 'Ship State: ' . strval($order['ShipState']) . '<br>';
+	   print 'Ship Country: ' . strval($order['ShipCountry']) . '<br>';
+	   print 'Ship Postal Code: ' . strval($order['ShipPostalCode']) . '<br>';
 	}
 	else
 	{
