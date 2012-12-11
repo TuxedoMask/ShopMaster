@@ -67,6 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 			$pname = substr($param, 5);
 			removeItem($pname);
 		}
+		elseif ($_GET['page'] == 'displayOrder')
+		{
+			$orderID = substr($param, 6);
+			displayOrder($orderID);
+		}
 
 	}
 }
@@ -180,12 +185,52 @@ function listOrders()
 	print '<br><br>';
 }
 
-//This needs to change once orders can be received.
 //Display order ID, customer ID, and date
 //Order ID be a clickable link that takes admin to a page that contains the order details.
 function printOrder($order)
 {
-	print (string)$order . '<br>';
+	$orderID = $order['OrderID'];
+	$customerID = $order['CustomerID'];
+	$orderDate = $order['OrderDate'];
+	$link = '<a href="./OwnerTools.php?page=displayOrder?order=' . $orderID . '"><button>' . 'Order ID: ' . $orderID . ' Customer ID: ' . $customerID . ' Order Date: ' . $orderDate . '</button></a><br>';
+	print $link . '<br>';
+}
+
+//Print out an individual order
+function displayOrder($orderID)
+{
+	$found = false;
+	global $db;
+	$orders = $db->getOrders();
+	while ($order = mysql_fetch_array($orders) && ($found == false))
+	{
+		if ($order['OrderID'] == $orderID)
+		{
+			$found = true;
+		}
+	}
+	
+	if ($found == true)
+	{
+	   //Order Number CustomerID OrderDate ShipName ShipEmail ShipPhone ShipAddress ShipCity ShipState ShipCountry ShipPostalCode
+	   print 'Order Number ' . $orderID . ':<br>';
+	   print 'Customer ID: ' . $order['CustomerID'] . '<br>';
+	   print 'Order Date: ' . $order['OrderDate'] . '<br>';
+	   print 'Ship Name: ' . $order['ShipName'] . '<br>';
+	   print 'Ship Email: ' . $order['ShipEmail'] . '<br>';
+	   print 'Ship Phone: ' . $order['ShipPhone'] . '<br>';
+	   print 'Ship Address: ' . $order['ShipAddress'] . '<br>';
+	   print 'Ship City: ' . $order['ShipCity'] . '<br>';
+	   print 'Ship State: ' . $order['ShipState'] . '<br>';
+	   print 'Ship Country: ' . $order['ShipCountry'] . '<br>';
+	   print 'Ship Postal Code: ' . $order['ShipPostalCode'] . '<br>';
+	}
+	else
+	{
+		print 'Error: The order you requested was not found <br>';
+	}
+	
+	print '<a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
 }
 
 ?>
