@@ -4,7 +4,6 @@
 	include_once ("global.php");
 	include_once ("layout.php");
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
    print 'The item with the following parameters has been updated:<br><br>';
@@ -16,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
    print 'image = ' . $_POST['imageURL'] . '<br>';
    print 'featured = ' . $_POST['featured'] . '<br>';
 
-   $item = array($_POST['name'], $_POST['desc'], $_POST['price'], $_POST['units'], $_POST['imageURL'],
-                 $_POST['featured']);
+   $item = array($_POST['name'], $_POST['desc'], $_POST['price'], $_POST['units'], $_POST['imageURL'], $_POST['featured']);
 
    editItem($_POST['prodID'], $item);
 
@@ -27,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Update the item in the database. Need help with this one
 function editItem($prodID, $item)
 {
-   global $db;
-   $db->updateProduct($prodID, $item);
+	global $db;
+	$db->updateProduct($prodID, $item);
 }
 
 

@@ -128,8 +128,9 @@ class DBFuncs
 		$units = mysql_real_escape_string($productArr[3]);
 		$image = mysql_real_escape_string($productArr[4]);
 		$featured = mysql_real_escape_string($productArr[5]);
-		$sql = "INSERT INTO `ply1`.`Products` (`ProductName`, `ProductDesc`, `UnitPrice` `UnitsInStock`, `Image`, `featured`) 
-		VALUES ('".$name."', '".$desc."', '".$price."','".$units."', '".$image."', '".$featured."')";
+		
+		$sql = "INSERT INTO `ply1`.`Products` (`ProductName`, `ProductDesc`, `UnitPrice`, `UnitsInStock`, `Image`, `Featured`) 
+		VALUES ('".$name."', '".$desc."', '".$price."', '".$units."', '".$image."', '".$featured."')";
 		
 		$this->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
 	

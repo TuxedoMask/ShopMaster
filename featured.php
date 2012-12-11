@@ -33,7 +33,7 @@
     
     // initialize counters
     $countOfFeaturedItems = 0;
-    $maxItems = 8;
+    $maxItems = 8; // THis must he a multiple of 4 for layout purposes.
     
     // Find out how many items are in the table
   	while ($row = mysql_fetch_assoc($result))

@@ -14,20 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
    print 'price = ' . $_POST['price'] . '<br>';
    print 'units = ' . $_POST['units'] . '<br>';
    print 'image = ' . $_POST['imageURL'] . '<br>';
-   print 'featured = ' . $_POST['featured'] . '<br>';
-
-   $item = array($_POST['name'], $_POST['desc'], $_POST['price'] ,$_POST['units'], $_POST['imageURL'],
-                 $_POST['featured']);
-
+   print 'featured = ' . $_POST['featured'] . '<br>';   
+   
+   $item = array($_POST['name'], $_POST['desc'], $_POST['price'] ,$_POST['units'], $_POST['imageURL'], $_POST['featured']);
+   
    addItem($item);
-
+   
    print '<br><a href="./OwnerTools.php?page=ownerTools"><button>Return to Owner Tools Menu</button></a><br>';
 }
 
 //Add item to database. Need help with this one
 function addItem($item)
 {
-   $db->addProduct($item);
+	global $db;
+	$db->addProduct($item);
 }
 
 include_once('footer.html');

@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
    }
 }
 include_once('footer.html');
+
 //The GUI for adding an item
 function addItemGUI()
 {
